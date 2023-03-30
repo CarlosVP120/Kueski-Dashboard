@@ -33,10 +33,33 @@ app.listen(3001, function check(error) {
   }
 });
 
-app.get("/api/User", async (req, res) => {
+app.get("/getUsers", async (req, res) => {
   let sql = "SELECT * FROM User";
   db.query(sql, (err, result) => {
     if (err) throw err;
     res.send({ data: result });
+  });
+});
+
+app.patch("/editUser/:id", async (req, res) => {
+  const userId = req.params.id;
+  const updatedUserData = req.body;
+  
+  const sql = "UPDATE User SET name=?, email=?, phone=? WHERE id=?";
+  const values = [updatedUserData.name, updatedUserData.email, updatedUserData.phone, userId];
+  
+  db.query(sql, values, (err, result) => {
+    if (err) throw err;
+    res.send({ message: "User updated successfully" });
+  });
+});
+
+app.delete("/deleteUser", async (req, res) => {
+  const sql = "DELETE FROM User WHERE IsUser = ?";
+  const values = [true];
+
+  db.query(sql, values, (err, result) => {
+    if (err) throw err;
+    res.send({ message: "Usuarios eliminados exitosamente" });
   });
 });
