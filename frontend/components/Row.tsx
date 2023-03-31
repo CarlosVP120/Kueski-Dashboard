@@ -89,13 +89,16 @@ const Row = ({
             </h1>
             <h1
               className="font-bold cursor-pointer py-0.5"
-              onClick={() => setOption("Historial")}
+              // On click show the history modal
             >
               Historial
             </h1>
             <h1
               className="font-bold cursor-pointer py-0.5"
-              onClick={() => setOption("Editar")}
+              onClick={() => {
+                setShowInfo(true);
+                // Open in edit mode or open a new modal
+              }}
             >
               Editar
             </h1>
