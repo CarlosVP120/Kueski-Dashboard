@@ -2,22 +2,10 @@ import React, { useState } from "react";
 import ShowInfoModal from "./ShowInfoModal";
 
 const Row = ({
-  id,
-  email,
-  name,
-  firstLastName,
-  secondLastName,
-  curp,
-  rfc,
+  user,
   setOption,
 }: {
-  id: string;
-  email: string;
-  name: string;
-  firstLastName: string;
-  secondLastName: string;
-  curp: string;
-  rfc: string;
+  user: any;
   setOption: (option: string) => void;
 }) => {
   const [open, setOpen] = useState(false);
@@ -34,18 +22,18 @@ const Row = ({
       >
         <th
           scope="row"
-          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+          className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap "
         >
-          {id}
+          {user["User ID"]}
         </th>
-        <td className="px-6 py-4">{email}</td>
-        <td className="px-6 py-4">{name}</td>
-        <td className="px-6 py-4">{firstLastName}</td>
-        <td className="px-6 py-4">{secondLastName}</td>
-        <td className="px-6 py-4">{curp}</td>
-        <td className="px-6 py-4">{rfc}</td>
+        <td className="px-4 py-4">{user["Email"]}</td>
+        <td className="px-4 py-4">{user["Name"]}</td>
+        <td className="px-4 py-4">{user["First Last Name"]}</td>
+        <td className="px-4 py-4">{user["Second Last Name"]}</td>
+        <td className="px-4 py-4">{user["CURP"]}</td>
+        <td className="px-4 py-4">{user["RFC"]}</td>
         <td
-          className="px-6 py-4 text-center flex flex-col justify-center items-center"
+          className="px-4 py-4 text-center flex flex-col justify-center items-center"
           onClick={() => setOpen(!open)}
         >
           <a
@@ -110,18 +98,7 @@ const Row = ({
           </div>
         </td>
       </tr>
-      {showInfo && (
-        <ShowInfoModal
-          setShowInfo={setShowInfo}
-          id={id}
-          email={email}
-          name={name}
-          firstLastName={firstLastName}
-          secondLastName={secondLastName}
-          curp={curp}
-          rfc={rfc}
-        />
-      )}
+      {showInfo && <ShowInfoModal setShowInfo={setShowInfo} user={user} />}
     </>
   );
 };

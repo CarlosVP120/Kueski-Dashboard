@@ -2,22 +2,10 @@ import React from "react";
 
 const ShowInfoModal = ({
   setShowInfo,
-  id,
-  email,
-  name,
-  firstLastName,
-  secondLastName,
-  curp,
-  rfc,
+  user,
 }: {
   setShowInfo: (showInfo: boolean) => void;
-  id: string;
-  email: string;
-  name: string;
-  firstLastName: string;
-  secondLastName: string;
-  curp: string;
-  rfc: string;
+  user: any;
 }) => {
   // Modal screen
   return (
@@ -48,7 +36,8 @@ const ShowInfoModal = ({
                   >
                     Acceso - {""}
                     <span className="text-blue-600">
-                      {name} {firstLastName} {secondLastName}
+                      {user["Name"]} {user["First Last Name"]}{" "}
+                      {user["Second Last Name"]}
                     </span>
                   </h1>
                   <div className="flex gap-3">
@@ -97,9 +86,78 @@ const ShowInfoModal = ({
                   </div>
                 </div>
                 <div className="mt-2">
+                  {/* First Column */}
+                  <p className="text-sm text-gray-500">{user["Name"]}: Name</p>
                   <p className="text-sm text-gray-500">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Consequatur amet labore.
+                    {user["First Last Name"]}: First Last Name
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {user["Second Last Name"]}: Second Last Name
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {user["Born Date"]}: Born Date
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {user["Nationality"]}: Nationality
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {user["State of Birth"]}: State of Birth
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {user["Economic Activity"]}: Economic Activity
+                  </p>
+                  <p className="text-sm text-gray-500">{user["CURP"]}: CURP</p>
+                  <p className="text-sm text-gray-500">{user["RFC"]}: RFC</p>
+                  <p className="text-sm text-gray-500">
+                    {user["Gender"]}: Gender
+                  </p>
+                  {/* Second Column */}
+                  <p className="text-sm text-gray-500">
+                    {user["Phone Number"]}: Phone Number
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {user["Email"]}: Email
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {user["Country"]}: Country
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {user["State"]}: State
+                  </p>
+                  <p className="text-sm text-gray-500">{user["City"]}: City</p>
+                  <p className="text-sm text-gray-500">
+                    {user["Neighborhood"]}: Neighborhood
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {user["ZIP Code"]}: ZIP Code
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {user["Street"]}: Street
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {user["Ext Number"]}: Ext Number
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {user["Int Number"]}: Int Number
+                  </p>
+                  {/* Third Column */}
+                  <p className="text-sm text-gray-500">
+                    {user["Additional Contact Name"]}: Additional Contact Name
+                  </p>
+
+                  <p className="text-sm text-gray-500">
+                    {user["Additional Contact Number"]}: Additional Contact
+                    Phone Number
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {user["Additional Contact Salary Range"]}: Additional
+                    Contact Salary Range
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {user["Identification Type"]}: Identification Type
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {user["Identification Number"]}: Identification Number
                   </p>
                 </div>
               </div>

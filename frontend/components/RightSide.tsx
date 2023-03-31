@@ -17,7 +17,7 @@ const RightSide = ({
   }, []);
 
   async function Load() {
-    const res = await fetch("http://localhost:3005/api/User/", {
+    const res = await fetch("http://localhost:5000/getUsers", {
       method: "GET",
       headers: {
         accept: "application/json",
@@ -27,9 +27,6 @@ const RightSide = ({
     const result = await res.json();
     setData(result.data);
   }
-
-  console.log(typeof data);
-  console.log(data);
 
   return (
     <div className="w-4/5 bg-white rounded-l-3xl p-3">

@@ -25,16 +25,16 @@ db.connect(function (error) {
 
 //Establish the Port
 
-app.listen(3005, function check(error) {
+app.listen(5000, function check(error) {
   if (error) {
     console.log("Error....");
   } else {
-    console.log("Server is running on port 3005");
+    console.log("Server is running on port 5000");
   }
 });
 
 app.get("/getUsers", async (req, res) => {
-  let sql = "SELECT * FROM User";
+  let sql = "SELECT * FROM Users";
   db.query(sql, (err, result) => {
     if (err) throw err;
     res.send({ data: result });
@@ -44,10 +44,15 @@ app.get("/getUsers", async (req, res) => {
 app.patch("/editUser/:id", async (req, res) => {
   const userId = req.params.id;
   const updatedUserData = req.body;
-  
+
   const sql = "UPDATE User SET name=?, email=?, phone=? WHERE id=?";
-  const values = [updatedUserData.name, updatedUserData.email, updatedUserData.phone, userId];
-  
+  const values = [
+    updatedUserData.name,
+    updatedUserData.email,
+    updatedUserData.phone,
+    userId,
+  ];
+
   db.query(sql, values, (err, result) => {
     if (err) throw err;
     res.send({ message: "User updated successfully" });
