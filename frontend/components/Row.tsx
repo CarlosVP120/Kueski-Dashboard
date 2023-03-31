@@ -69,7 +69,7 @@ const Row = ({
           </a>
           {/* Small modal on top of svg, separate it from the right by 10px */}
           <div
-            className="absolute mt-2 w-24 bg-white rounded-lg shadow-xl z-10 flex flex-col justify-center text-center items-center -right-48 animate-appearShort"
+            className="absolute right-0 mt-2 w-24 bg-white rounded-lg shadow-xl z-10 flex flex-col justify-center text-center items-center  animate-appearShort"
             style={{ display: open ? "flex" : "none" }}
           >
             {/* Close button on top right */}
