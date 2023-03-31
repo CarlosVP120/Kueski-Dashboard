@@ -4,9 +4,11 @@ import Row from "./Row";
 const DashboardTable = ({
   search,
   data,
+  setOption,
 }: {
   search: string;
   data: Array<any>;
+  setOption: (option: string) => void;
 }) => {
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-6">
@@ -49,6 +51,7 @@ const DashboardTable = ({
                 secondLastName={user["Second Last Name"]}
                 curp={user["CURP"]}
                 rfc={user["RFC"]}
+                setOption={setOption}
               />
             );
           })}

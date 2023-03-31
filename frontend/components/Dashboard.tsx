@@ -3,7 +3,13 @@ import { auth } from "../firebase/firebaseClient";
 import DashboardTopBar from "./DashboardTopBar";
 import DashboardTable from "./DashboardTable";
 
-const Dashboard = ({ data }: { data: any }) => {
+const Dashboard = ({
+  data,
+  setOption,
+}: {
+  data: any;
+  setOption: (option: string) => void;
+}) => {
   const [search, setSearch] = useState("");
 
   const name = auth.currentUser?.email
@@ -17,7 +23,7 @@ const Dashboard = ({ data }: { data: any }) => {
   return (
     <div className="w-full flex animate-appear flex-col h-full">
       <DashboardTopBar search={search} setSearch={setSearch} name={name!} />
-      <DashboardTable search={search} data={data} />
+      <DashboardTable search={search} data={data} setOption={setOption} />
     </div>
   );
 };

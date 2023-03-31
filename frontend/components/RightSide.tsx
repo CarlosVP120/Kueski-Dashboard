@@ -3,7 +3,13 @@ import Cancelacion from "./Cancelacion";
 import Dashboard from "./Dashboard";
 import Oposicion from "./Oposicion";
 
-const RightSide = ({ option }: { option: string }) => {
+const RightSide = ({
+  option,
+  setOption,
+}: {
+  option: string;
+  setOption: (option: string) => void;
+}) => {
   const [data, setData] = useState();
 
   useEffect(() => {
@@ -11,7 +17,7 @@ const RightSide = ({ option }: { option: string }) => {
   }, []);
 
   async function Load() {
-    const res = await fetch("http://localhost:3001/api/User/", {
+    const res = await fetch("http://localhost:3005/api/User/", {
       method: "GET",
       headers: {
         accept: "application/json",
@@ -28,7 +34,7 @@ const RightSide = ({ option }: { option: string }) => {
   return (
     <div className="w-4/5 bg-white rounded-l-3xl p-3">
       {option === "Dashboard" ? (
-        <Dashboard data={data} />
+        <Dashboard data={data} setOption={setOption} />
       ) : option === "Cancelación" ? (
         <Cancelacion />
       ) : (

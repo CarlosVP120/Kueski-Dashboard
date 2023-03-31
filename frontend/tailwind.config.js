@@ -13,6 +13,7 @@ module.exports = {
       animation: {
         appear: "appear 1s ease-in-out",
         appearLong: "appear 1.5s ease-in-out",
+        appearShort: "appear 0.2s ease-in-out",
       },
       keyframes: {
         appear: {
@@ -24,6 +25,14 @@ module.exports = {
           },
         },
         appearLong: {
+          "0%": {
+            opacity: 0,
+          },
+          "100%": {
+            opacity: 1,
+          },
+        },
+        appearShort: {
           "0%": {
             opacity: 0,
           },

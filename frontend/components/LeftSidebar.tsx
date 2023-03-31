@@ -16,7 +16,7 @@ const LeftSidebar = ({
       <div className="flex justify-center w-full h-20 mt-4">
         <img
           onLoad={() => setImageLoaded(true)}
-          className="animate-appear h-14"
+          className="animate-appear h-12"
           style={{ display: imageLoaded ? "block" : "none" }}
           src="/whiteLogo.svg"
           alt="Kueski Logo"

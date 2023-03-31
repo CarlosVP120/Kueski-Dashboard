@@ -26,7 +26,7 @@ const dashboard = () => {
       {auth.currentUser !== null ? (
         <div className="flex h-screen w-full animate-appear bg-black">
           <LeftSidebar setOption={setOption} />
-          <RightSide option={option} />
+          <RightSide option={option} setOption={setOption} />
         </div>
       ) : (
         <Loading />
