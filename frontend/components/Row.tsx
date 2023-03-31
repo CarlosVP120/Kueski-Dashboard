@@ -87,8 +87,24 @@ const Row = ({
             >
               Abrir
             </h1>
-            <h1 className="font-bold cursor-pointer py-0.5">Editar</h1>
-            <h1 className="font-bold cursor-pointer py-0.5">Oposición</h1>
+            <h1
+              className="font-bold cursor-pointer py-0.5"
+              onClick={() => setOption("Historial")}
+            >
+              Historial
+            </h1>
+            <h1
+              className="font-bold cursor-pointer py-0.5"
+              onClick={() => setOption("Editar")}
+            >
+              Editar
+            </h1>
+            <h1
+              className="font-bold cursor-pointer py-0.5"
+              onClick={() => setOption("Oposición")}
+            >
+              Oposición
+            </h1>
             <h1
               className="font-bold cursor-pointer py-0.5 text-red-500"
               onClick={() => setOption("Cancelación")}

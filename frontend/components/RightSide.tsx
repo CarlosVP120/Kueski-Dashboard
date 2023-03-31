@@ -34,9 +34,9 @@ const RightSide = ({
         <Dashboard data={data} setOption={setOption} />
       ) : option === "Cancelación" ? (
         <Cancelacion />
-      ) : (
+      ) : option === "Oposición" ? (
         <Oposicion />
-      )}
+      ) : null}
     </div>
   );
 };
