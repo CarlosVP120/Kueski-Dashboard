@@ -10,7 +10,7 @@ const ShowInfoModal = ({
   // Modal screen
   return (
     <div className="fixed z-10 inset-0 overflow-hidden animate-appearShort">
-      <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <div className="flex items-end justify-center min-h-screen text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
@@ -21,15 +21,15 @@ const ShowInfoModal = ({
           &#8203;
         </span>
         <div
-          className="inline-block align-bottom bg-white overflow-y-auto  rounded-lg overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle w-4/5 max-h-[90vh]"
+          className="inline-block align-bottom overflow-hidden p-5 bg-white overflow-y-auto  rounded-lg shadow-xl transform transition-all sm:my-8 sm:align-middle w-4/5 max-h-[90vh]"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-headline"
         >
-          <div className="w-full px-4 pb-4 ">
+          <div className="w-full ">
             <div className="sm:flex w-full">
               <div className="mt-3 text-center sm:mt-0 w-full">
-                <div className="w-full bg-white pt-5  mb-6 flex items-center justify-between sticky top-0">
+                <div className="w-full bg-white  mb-6 flex items-start justify-between sticky top-0">
                   <h1
                     className="text-2xl leading-6 font-bold text-gray-900 "
                     id="modal-headline"
@@ -85,85 +85,233 @@ const ShowInfoModal = ({
                     </button>
                   </div>
                 </div>
-                <div className="mt-2">
-                  {/* First Column */}
-                  <p className="text-sm text-gray-500">{user["Name"]}: Name</p>
-                  <p className="text-sm text-gray-500">
-                    {user["First Last Name"]}: First Last Name
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {user["Second Last Name"]}: Second Last Name
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {user["Born Date"]}: Born Date
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {user["Nationality"]}: Nationality
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {user["State of Birth"]}: State of Birth
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {user["Economic Activity"]}: Economic Activity
-                  </p>
-                  <p className="text-sm text-gray-500">{user["CURP"]}: CURP</p>
-                  <p className="text-sm text-gray-500">{user["RFC"]}: RFC</p>
-                  <p className="text-sm text-gray-500">
-                    {user["Gender"]}: Gender
-                  </p>
-                  {/* Second Column */}
-                  <p className="text-sm text-gray-500">
-                    {user["Phone Number"]}: Phone Number
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {user["Email"]}: Email
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {user["Country"]}: Country
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {user["State"]}: State
-                  </p>
-                  <p className="text-sm text-gray-500">{user["City"]}: City</p>
-                  <p className="text-sm text-gray-500">
-                    {user["Neighborhood"]}: Neighborhood
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {user["ZIP Code"]}: ZIP Code
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {user["Street"]}: Street
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {user["Ext Number"]}: Ext Number
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {user["Int Number"]}: Int Number
-                  </p>
-                  {/* Third Column */}
-                  <p className="text-sm text-gray-500">
-                    {user["Additional Contact Name"]}: Additional Contact Name
-                  </p>
-
-                  <p className="text-sm text-gray-500">
-                    {user["Additional Contact Number"]}: Additional Contact
-                    Phone Number
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {user["Additional Contact Salary Range"]}: Additional
-                    Contact Salary Range
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {user["Identification Type"]}: Identification Type
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {user["Identification Number"]}: Identification Number
-                  </p>
+                <div className="mt-2 w-full">
+                  <div className="flex justify-center w-full text-black">
+                    {/* First Column */}
+                    <div className="flex-column text-left w-full">
+                      <div className="mb-3">
+                        <p className="text-base">Name:</p>
+                        <p className="text-base font-bold">{user["Name"]}</p>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base">
+                          First Last Name:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["First Last Name"]}
+                        </p>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base">
+                          Second Last Name:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["Second Last Name"]}
+                        </p>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base">
+                          Born Date:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["Born Date"]}
+                        </p>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base">
+                         Nationality:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["Nationality"]}
+                        </p>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base">
+                         State of Birth:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["State of Birth"]}
+                        </p>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base">
+                         Economic Activity:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["Economic Activity"]}
+                        </p>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base">
+                         CURP:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["CURP"]}
+                        </p>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base">
+                         RFC:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["RFC"]}
+                        </p>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base">
+                         Gender:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["Gender"]}
+                        </p>
+                      </div>
+                    </div>
+                    {/* Second Column */}
+                    <div className="flex-column text-left w-full">
+                       <div className="mb-3">
+                        <p className="text-base">
+                         Phone Number:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["Phone Number"]}
+                        </p>
+                      </div>
+                       <div className="mb-3">
+                        <p className="text-base">
+                         Email:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["Email"]}
+                        </p>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base font-bold text-gray-500">Address: </p>
+                        <div className="w-80 h-1 bg-gray-500"></div>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base">
+                         Country:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["Country"]}
+                        </p>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base">
+                         State:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["State"]}
+                        </p>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base">
+                         City:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["City"]}
+                        </p>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base">
+                         Neighborhood:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["Neighborhood"]}
+                        </p>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base">
+                         ZIP Code:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["ZIP Code"]}
+                        </p>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base">
+                         Street:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["Street"]}
+                        </p>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base">
+                         Ext Number:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["Ext Number"]}
+                        </p>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base">
+                         Int Number:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["Int Number"]}
+                        </p>
+                      </div>
+                    </div>
+                    {/* Third Column */}
+                    <div className="flex-column text-left w-full">
+                      <div className="bg-gray-200 p-4 mb-3 rounded-xl">
+                        <div className="mb-3">
+                          <p className="text-base font-bold text-gray-500">Additional Contact Information: </p>
+                          <div className="w-80 h-1 bg-gray-500"></div>
+                        </div>
+                        <div className="mb-3">
+                          <p className="text-base">
+                          Name:
+                          </p>
+                          <p className="text-base font-bold">
+                            {user["Additional Contact Name"]}
+                          </p>
+                        </div>
+                        <div className="mb-3">
+                          <p className="text-base">
+                          Phone Number:
+                          </p>
+                          <p className="text-base font-bold">
+                            {user["Additional Contact Number"]}
+                          </p>
+                        </div>
+                        <div className="mb-3">
+                          <p className="text-base">
+                          Salary Range:
+                          </p>
+                          <p className="text-base font-bold">
+                            {user["Additional Contact Salary Range"]}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base font-bold text-gray-500">Identifications: </p>
+                        <div className="w-80 h-1 bg-gray-500"></div>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base">
+                         Identification Type:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["Identification Type"]}
+                        </p>
+                      </div>
+                      <div className="mb-3">
+                        <p className="text-base">
+                         Identification Number:
+                        </p>
+                        <p className="text-base font-bold">
+                          {user["Identification Number"]}
+                        </p>
+                      </div>
+                      </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+          <div className=" s sm:px-6 sm:flex sm:flex-row-reverse">
             <button
               type="button"
               onClick={() => setShowInfo(false)}
