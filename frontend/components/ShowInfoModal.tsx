@@ -1,4 +1,5 @@
 import React from "react";
+import { useState, useEffect } from "react";
 
 const ShowInfoModal = ({
   setShowInfo,
@@ -8,6 +9,26 @@ const ShowInfoModal = ({
   user: any;
 }) => {
   // Modal screen
+
+  // Show bottom border on scroll of modal
+  const [showBorder, setShowBorder] = useState(false);
+
+  // Detect scrolling of modal
+  useEffect(() => {
+    const modal = document.querySelector(".modal");
+    const handleScroll = () => {
+      if (modal?.scrollTop! > 0) {
+        setShowBorder(true);
+      } else {
+        setShowBorder(false);
+      }
+    };
+    modal?.addEventListener("scroll", handleScroll);
+    return () => {
+      modal?.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <div className="fixed z-10 inset-0 overflow-hidden animate-appearShort">
       <div className="flex items-end justify-center min-h-screen text-center sm:block sm:p-0">
@@ -21,15 +42,19 @@ const ShowInfoModal = ({
           &#8203;
         </span>
         <div
-          className="inline-block align-bottom overflow-hidden p-5 bg-white overflow-y-auto  rounded-lg shadow-xl transform transition-all sm:my-8 sm:align-middle w-4/5 max-h-[90vh]"
+          className="modal inline-block align-bottom overflow-hidden  pt-0 bg-white overflow-y-auto  rounded-lg shadow-xl transform transition-all sm:my-8 sm:align-middle w-4/5 max-h-[90vh]"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-headline"
         >
-          <div className="w-full ">
+          <div className="w-full">
             <div className="sm:flex w-full">
-              <div className="mt-3 text-center sm:mt-0 w-full">
-                <div className="w-full bg-white  mb-6 flex items-start justify-between sticky top-0">
+              <div className="mt-3 text-center sm:mt-0 w-full ">
+                <div
+                  className={`w-full mb-6 px-5 py-2 bg-white pt-4 flex justify-between sticky top-0 items-center ${
+                    showBorder ? "shadow-md" : ""
+                  }`}
+                >
                   <h1
                     className="text-2xl leading-6 font-bold text-gray-900 "
                     id="modal-headline"
@@ -85,7 +110,7 @@ const ShowInfoModal = ({
                     </button>
                   </div>
                 </div>
-                <div className="mt-2 w-full">
+                <div className="mt-2 w-full p-5 pt-2">
                   <div className="flex justify-center w-full text-black">
                     {/* First Column */}
                     <div className="flex-column text-left w-full">
@@ -253,7 +278,7 @@ const ShowInfoModal = ({
               </div>
             </div>
           </div>
-          <div className=" s sm:px-6 sm:flex sm:flex-row-reverse">
+          <div className=" sm:px-6 sm:flex sm:flex-row-reverse pb-5">
             <button
               type="button"
               onClick={() => setShowInfo(false)}
