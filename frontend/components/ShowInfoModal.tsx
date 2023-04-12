@@ -94,160 +94,108 @@ const ShowInfoModal = ({
                         <p className="text-base font-bold">{user["Name"]}</p>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">
-                          First Last Name:
-                        </p>
+                        <p className="text-base">First Last Name:</p>
                         <p className="text-base font-bold">
                           {user["First Last Name"]}
                         </p>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">
-                          Second Last Name:
-                        </p>
+                        <p className="text-base">Second Last Name:</p>
                         <p className="text-base font-bold">
                           {user["Second Last Name"]}
                         </p>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">
-                          Born Date:
-                        </p>
+                        <p className="text-base">Born Date:</p>
                         <p className="text-base font-bold">
                           {user["Born Date"]}
                         </p>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">
-                         Nationality:
-                        </p>
+                        <p className="text-base">Nationality:</p>
                         <p className="text-base font-bold">
                           {user["Nationality"]}
                         </p>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">
-                         State of Birth:
-                        </p>
+                        <p className="text-base">State of Birth:</p>
                         <p className="text-base font-bold">
                           {user["State of Birth"]}
                         </p>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">
-                         Economic Activity:
-                        </p>
+                        <p className="text-base">Economic Activity:</p>
                         <p className="text-base font-bold">
                           {user["Economic Activity"]}
                         </p>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">
-                         CURP:
-                        </p>
-                        <p className="text-base font-bold">
-                          {user["CURP"]}
-                        </p>
+                        <p className="text-base">CURP:</p>
+                        <p className="text-base font-bold">{user["CURP"]}</p>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">
-                         RFC:
-                        </p>
-                        <p className="text-base font-bold">
-                          {user["RFC"]}
-                        </p>
+                        <p className="text-base">RFC:</p>
+                        <p className="text-base font-bold">{user["RFC"]}</p>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">
-                         Gender:
-                        </p>
-                        <p className="text-base font-bold">
-                          {user["Gender"]}
-                        </p>
+                        <p className="text-base">Gender:</p>
+                        <p className="text-base font-bold">{user["Gender"]}</p>
                       </div>
                     </div>
                     {/* Second Column */}
                     <div className="flex-column text-left w-full">
-                       <div className="mb-3">
-                        <p className="text-base">
-                         Phone Number:
-                        </p>
+                      <div className="mb-3">
+                        <p className="text-base">Phone Number:</p>
                         <p className="text-base font-bold">
                           {user["Phone Number"]}
                         </p>
                       </div>
-                       <div className="mb-3">
-                        <p className="text-base">
-                         Email:
-                        </p>
-                        <p className="text-base font-bold">
-                          {user["Email"]}
-                        </p>
+                      <div className="mb-3">
+                        <p className="text-base">Email:</p>
+                        <p className="text-base font-bold">{user["Email"]}</p>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base font-bold text-gray-500">Address: </p>
-                        <div className="w-80 h-1 bg-gray-500"></div>
+                        <p className="text-base font-bold text-gray-500">
+                          Address:{" "}
+                        </p>
+                        <div className="w-4/5 h-[3px] bg-gray-500"></div>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">
-                         Country:
-                        </p>
-                        <p className="text-base font-bold">
-                          {user["Country"]}
-                        </p>
+                        <p className="text-base">Country:</p>
+                        <p className="text-base font-bold">{user["Country"]}</p>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">
-                         State:
-                        </p>
-                        <p className="text-base font-bold">
-                          {user["State"]}
-                        </p>
+                        <p className="text-base">State:</p>
+                        <p className="text-base font-bold">{user["State"]}</p>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">
-                         City:
-                        </p>
-                        <p className="text-base font-bold">
-                          {user["City"]}
-                        </p>
+                        <p className="text-base">City:</p>
+                        <p className="text-base font-bold">{user["City"]}</p>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">
-                         Neighborhood:
-                        </p>
+                        <p className="text-base">Neighborhood:</p>
                         <p className="text-base font-bold">
                           {user["Neighborhood"]}
                         </p>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">
-                         ZIP Code:
-                        </p>
+                        <p className="text-base">ZIP Code:</p>
                         <p className="text-base font-bold">
                           {user["ZIP Code"]}
                         </p>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">
-                         Street:
-                        </p>
-                        <p className="text-base font-bold">
-                          {user["Street"]}
-                        </p>
+                        <p className="text-base">Street:</p>
+                        <p className="text-base font-bold">{user["Street"]}</p>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">
-                         Ext Number:
-                        </p>
+                        <p className="text-base">Ext Number:</p>
                         <p className="text-base font-bold">
                           {user["Ext Number"]}
                         </p>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">
-                         Int Number:
-                        </p>
+                        <p className="text-base">Int Number:</p>
                         <p className="text-base font-bold">
                           {user["Int Number"]}
                         </p>
@@ -257,55 +205,49 @@ const ShowInfoModal = ({
                     <div className="flex-column text-left w-full">
                       <div className="bg-gray-200 p-4 mb-3 rounded-xl">
                         <div className="mb-3">
-                          <p className="text-base font-bold text-gray-500">Additional Contact Information: </p>
-                          <div className="w-80 h-1 bg-gray-500"></div>
+                          <p className="text-base font-bold text-gray-500">
+                            Additional Contact Information:{" "}
+                          </p>
+                          <div className="w-4/5 h-[3px] bg-gray-500"></div>
                         </div>
                         <div className="mb-3">
-                          <p className="text-base">
-                          Name:
-                          </p>
+                          <p className="text-base">Name:</p>
                           <p className="text-base font-bold">
                             {user["Additional Contact Name"]}
                           </p>
                         </div>
                         <div className="mb-3">
-                          <p className="text-base">
-                          Phone Number:
-                          </p>
+                          <p className="text-base">Phone Number:</p>
                           <p className="text-base font-bold">
                             {user["Additional Contact Number"]}
                           </p>
                         </div>
                         <div className="mb-3">
-                          <p className="text-base">
-                          Salary Range:
-                          </p>
+                          <p className="text-base">Salary Range:</p>
                           <p className="text-base font-bold">
                             {user["Additional Contact Salary Range"]}
                           </p>
                         </div>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base font-bold text-gray-500">Identifications: </p>
-                        <div className="w-80 h-1 bg-gray-500"></div>
+                        <p className="text-base font-bold text-gray-500">
+                          Identifications:{" "}
+                        </p>
+                        <div className="w-4/5 h-[3px] bg-gray-500"></div>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">
-                         Identification Type:
-                        </p>
+                        <p className="text-base">Identification Type:</p>
                         <p className="text-base font-bold">
                           {user["Identification Type"]}
                         </p>
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">
-                         Identification Number:
-                        </p>
+                        <p className="text-base">Identification Number:</p>
                         <p className="text-base font-bold">
                           {user["Identification Number"]}
                         </p>
                       </div>
-                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -8,11 +8,25 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Connect to this DB:
+
+// Server: sql9.freemysqlhosting.net;
+// Name: sql9612576;
+// Username: sql9612576;
+// Password: NMWcinTmWz;
+
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "",
+//   database: "Kueski",
+// });
+
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "Kueski",
+  host: "sql9.freemysqlhosting.net",
+  user: "sql9612576",
+  password: "NMWcinTmWz",
+  database: "sql9612576",
 });
 
 db.connect(function (error) {
