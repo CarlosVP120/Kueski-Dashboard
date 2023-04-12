@@ -17,7 +17,7 @@ const RightSide = ({
   }, []);
 
   async function Load() {
-    const res = await fetch("http://localhost:5000/getUsers", {
+    const res = await fetch("https://kueski-users-db.onrender.com/getUsers", {
       method: "GET",
       headers: {
         accept: "application/json",

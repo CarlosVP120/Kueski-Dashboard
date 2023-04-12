@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import LeftSidebar from "../components/LeftSidebar";
 import RightSide from "../components/RightSide";
 
-const dashboard = () => {
+const Dashboard = () => {
   const router = useRouter();
   useEffect(() => {
     if (auth.currentUser === null) {
@@ -35,4 +35,4 @@ const dashboard = () => {
   );
 };
 
-export default dashboard;
+export default Dashboard;

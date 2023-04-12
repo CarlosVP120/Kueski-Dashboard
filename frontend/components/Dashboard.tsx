@@ -3,7 +3,7 @@ import { auth } from "../firebase/firebaseClient";
 import DashboardTopBar from "./DashboardTopBar";
 import DashboardTable from "./DashboardTable";
 
-const Dashboard = ({
+const DashboardComponent = ({
   data,
   setOption,
 }: {
@@ -28,4 +28,4 @@ const Dashboard = ({
   );
 };
 
-export default Dashboard;
+export default DashboardComponent;
