@@ -61,8 +61,7 @@ const ShowInfoModal = ({
                   >
                     Acceso - {""}
                     <span className="text-blue-600">
-                      {user["Name"]} {user["First Last Name"]}{" "}
-                      {user["Second Last Name"]}
+                      {user["Name"]} {user["Second Last Name"]}
                     </span>
                   </h1>
                   <div className="flex gap-3">

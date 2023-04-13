@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { auth } from "../firebase/firebaseClient";
 import DashboardTopBar from "./DashboardTopBar";
 import DashboardTable from "./DashboardTable";
@@ -12,6 +12,15 @@ const DashboardComponent = ({
 }) => {
   const [search, setSearch] = useState("");
 
+  // filter the data to show only the ones that match the search by name
+  data = data?.filter((user: any) => {
+    return (
+      user["Name"].toLowerCase().includes(search.toLowerCase()) ||
+      user["First Last Name"].toLowerCase().includes(search.toLowerCase()) ||
+      user["Second Last Name"].toLowerCase().includes(search.toLowerCase())
+    );
+  });
+
   const name = auth.currentUser?.email
     ?.split("@")[0]
     .split("_")
@@ -23,7 +32,7 @@ const DashboardComponent = ({
   return (
     <div className="w-full flex animate-appear flex-col h-full">
       <DashboardTopBar search={search} setSearch={setSearch} name={name!} />
-      <DashboardTable search={search} data={data} setOption={setOption} />
+      <DashboardTable data={data} setOption={setOption} />
     </div>
   );
 };
