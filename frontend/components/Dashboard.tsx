@@ -6,9 +6,11 @@ import DashboardTable from "./DashboardTable";
 const DashboardComponent = ({
   data,
   setOption,
+  setUpdate,
 }: {
   data: any;
   setOption: (option: string) => void;
+  setUpdate: (update: boolean) => void;
 }) => {
   const [search, setSearch] = useState("");
 
@@ -32,7 +34,7 @@ const DashboardComponent = ({
   return (
     <div className="w-full flex animate-appear flex-col h-full">
       <DashboardTopBar search={search} setSearch={setSearch} name={name!} />
-      <DashboardTable data={data} setOption={setOption} />
+      <DashboardTable data={data} setOption={setOption} setUpdate={setUpdate} />
     </div>
   );
 };

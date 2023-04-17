@@ -4,12 +4,15 @@ import ShowInfoModal from "./ShowInfoModal";
 const Row = ({
   user,
   setOption,
+  setUpdate,
 }: {
   user: any;
   setOption: (option: string) => void;
+  setUpdate: (update: boolean) => void;
 }) => {
   const [open, setOpen] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   return (
     <>
@@ -117,7 +120,15 @@ const Row = ({
           </div>
         </td>
       </tr>
-      {showInfo && <ShowInfoModal setShowInfo={setShowInfo} user={user} />}
+      {showInfo && (
+        <ShowInfoModal
+          setShowInfo={setShowInfo}
+          user={user}
+          edit={edit}
+          setEdit={setEdit}
+          setUpdate={setUpdate}
+        />
+      )}
     </>
   );
 };

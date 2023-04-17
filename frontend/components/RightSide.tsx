@@ -11,12 +11,21 @@ const RightSide = ({
   setOption: (option: string) => void;
 }) => {
   const [data, setData] = useState();
+  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     (async () => await Load())();
   }, []);
 
+  useEffect(() => {
+    if (update) {
+      (async () => await Load())();
+      setUpdate(false);
+    }
+  }, [update]);
+
   async function Load() {
+    // const res = await fetch("https://kueski-users-db.onrender.com/getUsers", {
     const res = await fetch("https://kueski-users-db.onrender.com/getUsers", {
       method: "GET",
       headers: {
@@ -31,7 +40,7 @@ const RightSide = ({
   return (
     <div className="w-4/5 bg-white rounded-l-3xl p-3">
       {option === "Dashboard" ? (
-        <Dashboard data={data} setOption={setOption} />
+        <Dashboard data={data} setOption={setOption} setUpdate={setUpdate} />
       ) : option === "Cancelación" ? (
         <Cancelacion />
       ) : option === "Oposición" ? (

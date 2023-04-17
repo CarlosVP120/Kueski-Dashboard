@@ -4,9 +4,11 @@ import Row from "./Row";
 const DashboardTable = ({
   data,
   setOption,
+  setUpdate,
 }: {
   data: Array<any>;
   setOption: (option: string) => void;
+  setUpdate: (update: boolean) => void;
 }) => {
   return (
     <>
@@ -41,7 +43,14 @@ const DashboardTable = ({
             </thead>
             <tbody>
               {data?.map((user: any) => {
-                return <Row key={user._id} user={user} setOption={setOption} />;
+                return (
+                  <Row
+                    key={user._id}
+                    user={user}
+                    setOption={setOption}
+                    setUpdate={setUpdate}
+                  />
+                );
               })}
             </tbody>
           </table>
