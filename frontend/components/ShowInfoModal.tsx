@@ -200,7 +200,7 @@ const ShowInfoModal = ({
                     <PDFDownloadLink
                       className="flex px-3 py-2 font-bold bg-blue-600 text-white rounded-2xl shadow-md hover:bg-blue-700 transition duration-200 items-center"
                       document={<PDFView user={user} />}
-                      fileName="somename.pdf"
+                      fileName={`${user["Name"]}_${user["Second Last Name"]}.pdf`}
                     >
                       {({ blob, url, loading, error }) =>
                         loading ? "Cargando..." : "Generar Reporte"
