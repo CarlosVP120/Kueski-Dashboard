@@ -41,76 +41,73 @@ const ShowInfoModal = ({
   const saveChangesInDB = () => {
     // Save changes in DB (https://kueski-users-db.onrender.com/)
     // Update user in DB with PATCH
-    fetch(
-      `http://https://kueski-users-db.onrender.com/editUser/${user["User ID"]}`,
-      {
-        method: "PATCH",
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          // <Text>Name: {user["Name"]}</Text>
-          // <Text>First Last Name: {user["First Last Name"]}</Text>
-          // <Text>Second Last Name: {user["Second Last Name"]}</Text>
-          // <Text>Born Date: {user["Born Date"]}</Text>
-          // <Text>Nationality: {user["Nationality"]}</Text>
-          // <Text>State of Birth: {user["State of Birth"]}</Text>
-          // <Text>Economic Activity: {user["Economic Activity"]}</Text>
-          // <Text>CURP: {user["CURP"]}</Text>
-          // <Text>RFC: {user["RFC"]}</Text>
-          // <Text>Gender: {user["Gender"]}</Text>
-          // <Text>Phone Number: {user["Phone Number"]}</Text>
-          // <Text>Email: {user["Email"]}</Text>
-          // <Text>Country: {user["Country"]}</Text>
-          // <Text>State: {user["State"]}</Text>
-          // <Text>City: {user["City"]}</Text>
-          // <Text>Neighborhood: {user["Neighborhood"]}</Text>
-          // <Text>ZIP Code: {user["ZIP Code"]}</Text>
-          // <Text>Street: {user["Street"]}</Text>
-          // <Text>Ext Number: {user["Ext Number"]}</Text>
-          // <Text>Int Number: {user["Int Number"]}</Text>
-          // <Text>Additional Contact Name: {user["Additional Contact Name"]}</Text>
-          // <Text>
-          //   Additional Contact Number: {user["Additional Contact Number"]}
-          // </Text>
-          // <Text>
-          //   Additional Contact Salary Range:{" "}
-          //   {user["Additional Contact Salary Range"]}
-          // </Text>
-          // <Text>Identification Type: {user["Identification Type"]}</Text>
-          // <Text>Identification Number: {user["Identification Number"]}</Text>
+    fetch(`https://kueski-users-db.onrender.com/editUser/${user["User ID"]}`, {
+      method: "PATCH",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // <Text>Name: {user["Name"]}</Text>
+        // <Text>First Last Name: {user["First Last Name"]}</Text>
+        // <Text>Second Last Name: {user["Second Last Name"]}</Text>
+        // <Text>Born Date: {user["Born Date"]}</Text>
+        // <Text>Nationality: {user["Nationality"]}</Text>
+        // <Text>State of Birth: {user["State of Birth"]}</Text>
+        // <Text>Economic Activity: {user["Economic Activity"]}</Text>
+        // <Text>CURP: {user["CURP"]}</Text>
+        // <Text>RFC: {user["RFC"]}</Text>
+        // <Text>Gender: {user["Gender"]}</Text>
+        // <Text>Phone Number: {user["Phone Number"]}</Text>
+        // <Text>Email: {user["Email"]}</Text>
+        // <Text>Country: {user["Country"]}</Text>
+        // <Text>State: {user["State"]}</Text>
+        // <Text>City: {user["City"]}</Text>
+        // <Text>Neighborhood: {user["Neighborhood"]}</Text>
+        // <Text>ZIP Code: {user["ZIP Code"]}</Text>
+        // <Text>Street: {user["Street"]}</Text>
+        // <Text>Ext Number: {user["Ext Number"]}</Text>
+        // <Text>Int Number: {user["Int Number"]}</Text>
+        // <Text>Additional Contact Name: {user["Additional Contact Name"]}</Text>
+        // <Text>
+        //   Additional Contact Number: {user["Additional Contact Number"]}
+        // </Text>
+        // <Text>
+        //   Additional Contact Salary Range:{" "}
+        //   {user["Additional Contact Salary Range"]}
+        // </Text>
+        // <Text>Identification Type: {user["Identification Type"]}</Text>
+        // <Text>Identification Number: {user["Identification Number"]}</Text>
 
-          "User ID": user["User ID"],
-          Name: tempUser["Name"],
-          "First Last Name": tempUser["First Last Name"],
-          "Second Last Name": tempUser["Second Last Name"],
-          "Born Date": tempUser["Born Date"],
-          Nationality: tempUser["Nationality"],
-          "State of Birth": tempUser["State of Birth"],
-          "Economic Activity": tempUser["Economic Activity"],
-          CURP: tempUser["CURP"],
-          RFC: tempUser["RFC"],
-          Gender: tempUser["Gender"],
-          "Phone Number": tempUser["Phone Number"],
-          Email: tempUser["Email"],
-          Country: tempUser["Country"],
-          State: tempUser["State"],
-          City: tempUser["City"],
-          Neighborhood: tempUser["Neighborhood"],
-          "ZIP Code": tempUser["ZIP Code"],
-          Street: tempUser["Street"],
-          "Ext Number": tempUser["Ext Number"],
-          "Int Number": tempUser["Int Number"],
-          "Additional Contact Name": tempUser["Additional Contact Name"],
-          "Additional Contact Number": tempUser["Additional Contact Number"],
-          "Additional Contact Salary Range":
-            tempUser["Additional Contact Salary Range"],
-          "Identification Type": tempUser["Identification Type"],
-          "Identification Number": tempUser["Identification Number"],
-        }),
-      }
-    )
+        "User ID": user["User ID"],
+        Name: tempUser["Name"],
+        "First Last Name": tempUser["First Last Name"],
+        "Second Last Name": tempUser["Second Last Name"],
+        "Born Date": tempUser["Born Date"],
+        Nationality: tempUser["Nationality"],
+        "State of Birth": tempUser["State of Birth"],
+        "Economic Activity": tempUser["Economic Activity"],
+        CURP: tempUser["CURP"],
+        RFC: tempUser["RFC"],
+        Gender: tempUser["Gender"],
+        "Phone Number": tempUser["Phone Number"],
+        Email: tempUser["Email"],
+        Country: tempUser["Country"],
+        State: tempUser["State"],
+        City: tempUser["City"],
+        Neighborhood: tempUser["Neighborhood"],
+        "ZIP Code": tempUser["ZIP Code"],
+        Street: tempUser["Street"],
+        "Ext Number": tempUser["Ext Number"],
+        "Int Number": tempUser["Int Number"],
+        "Additional Contact Name": tempUser["Additional Contact Name"],
+        "Additional Contact Number": tempUser["Additional Contact Number"],
+        "Additional Contact Salary Range":
+          tempUser["Additional Contact Salary Range"],
+        "Identification Type": tempUser["Identification Type"],
+        "Identification Number": tempUser["Identification Number"],
+      }),
+    })
       .then((res) => res.json())
       .then((data) => {
         alert(data.message);
