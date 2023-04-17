@@ -22,6 +22,10 @@ const Dashboard = () => {
       <Head>
         <title>Dashboard</title>
         <link rel="icon" href="/vercel.svg" />
+        <meta
+          http-equiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        />
       </Head>
       {auth.currentUser !== null ? (
         <div className="flex h-screen w-full animate-appear bg-black">
