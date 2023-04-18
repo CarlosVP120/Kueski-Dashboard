@@ -8,13 +8,6 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Connect to this DB:
-
-// Server: sql9.freemysqlhosting.net;
-// Name: sql9612576;
-// Username: sql9612576;
-// Password: NMWcinTmWz;
-
 // const db = mysql.createConnection({
 //   host: "localhost",
 //   user: "root",
@@ -38,7 +31,6 @@ db.connect(function (error) {
 });
 
 //Establish the Port
-
 app.listen(5000, function check(error) {
   if (error) {
     console.log("Error....");
@@ -48,7 +40,7 @@ app.listen(5000, function check(error) {
 });
 
 app.get("/getUsers", async (req, res) => {
-  let sql = "SELECT * FROM Users";
+  let sql = "SELECT * FROM users";
   db.query(sql, (err, result) => {
     if (err) throw err;
     res.send({ data: result });
