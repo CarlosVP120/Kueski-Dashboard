@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Cancelacion from "./Cancelacion";
 import Dashboard from "./Dashboard";
 import Oposicion from "./Oposicion";
+import Historial from "./Historial";
 
 const RightSide = ({
   option,
@@ -45,6 +46,8 @@ const RightSide = ({
         <Cancelacion />
       ) : option === "Oposición" ? (
         <Oposicion />
+      ) : option === "Historial" ? (
+        <Historial />
       ) : null}
     </div>
   );
