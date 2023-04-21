@@ -118,8 +118,10 @@ app.patch("/editUser/:id", async (req, res) => {
   // Update only the users table based on the updatedUserData object
   let sql = "UPDATE users SET ";
   let values = [];
+  let user_modify = false;
   for (let i = 0; i < users_table.length; i++) {
     if (updatedUserData[users_table[i]]) {
+      user_modify = true;
       sql += `${users_table[i]} = ?, `;
       values.push(updatedUserData[users_table[i]]);
     }
@@ -130,9 +132,11 @@ app.patch("/editUser/:id", async (req, res) => {
 
   // Update only the addresses table based on the updatedUserData object
   let sql2 = "UPDATE addresses SET ";
+  let addresses_modify = false;
   let values2 = [];
   for (let i = 0; i < addresses_table.length; i++) {
     if (updatedUserData[addresses_table[i]]) {
+      addresses_modify = true;
       sql2 += `${addresses_table[i]} = ?, `;
       values2.push(updatedUserData[addresses_table[i]]);
     }
@@ -142,13 +146,25 @@ app.patch("/editUser/:id", async (req, res) => {
   values2.push(userId);
 
   // execute the queries
-  db.query(sql, values, (err, result) => {
-    if (err) throw err;
-    db.query(sql2, values2, (err, result) => {
-      if (err) res.send({ message: "Error updating user" });
+  if (user_modify && addresses_modify) {
+    db.query(sql, values, (err, result) => {
+      if (err) throw err;
+      db.query(sql2, values2, (err, result) => {
+        if (err) res.send({ message: "Error updating user" });
+        res.send({ message: "User updated successfully" });
+      });
+    });
+  } else if (user_modify) {
+    db.query(sql, values, (err, result) => {
+      if (err) throw err;
       res.send({ message: "User updated successfully" });
     });
-  });
+  } else if (addresses_modify) {
+    db.query(sql2, values2, (err, result) => {
+      if (err) throw err;
+      res.send({ message: "User updated successfully" });
+    });
+  }
 });
 
 app.delete("/deleteUser", async (req, res) => {
