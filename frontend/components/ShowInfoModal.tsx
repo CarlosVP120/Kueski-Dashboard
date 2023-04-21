@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import PDFView from "./PDF";
 import { type } from "os";
+import { isArray } from "util";
 
 const ShowInfoModal = ({
   setShowInfo,
@@ -22,6 +23,14 @@ const ShowInfoModal = ({
   // Show bottom border on scroll of modal
   const [showBorder, setShowBorder] = useState(false);
   const [tempUser, setTempUser] = useState(user);
+
+  // Convert the user_data string to an object and replace the user_data string with the object
+
+  if (typeof user.user_data !== "object") {
+    const userData = JSON.parse(user.user_data);
+    user.user_data = userData;
+    setTempUser(user);
+  }
 
   // Detect scrolling of modal
   useEffect(() => {
@@ -202,7 +211,7 @@ const ShowInfoModal = ({
                     <PDFDownloadLink
                       className="flex px-3 py-2 font-bold bg-blue-600 text-white rounded-2xl shadow-md hover:bg-blue-700 transition duration-200 items-center"
                       document={<PDFView user={user} />}
-                      fileName={`${user["Name"]}_${user["second_last_name"]}.pdf`}
+                      fileName={`${user["user_name"]}_${user["second_last_name"]}.pdf`}
                     >
                       {({ blob, url, loading, error }) =>
                         loading ? "Cargando..." : "Generar Reporte"
@@ -652,79 +661,50 @@ const ShowInfoModal = ({
                     </div>
                     {/* Third Column */}
                     <div className="flex-column text-left w-full">
-                      {/* <div className="bg-gray-200 p-4 mb-3 rounded-xl">
+                      <div className="bg-gray-200 p-4 mb-3 rounded-xl">
                         <div className="mb-3">
                           <p className="text-base font-bold text-gray-500">
                             Additional Contact Information:{" "}
                           </p>
                           <div className="w-4/5 h-[3px] bg-gray-500"></div>
                         </div>
-                        <div className="mb-3">
-                          <p className="text-base">Name:</p>
-                          {edit ? (
-                            <input
-                              type="text"
-                              className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                              value={tempUser["Additional Contact Name"]}
-                              onChange={(e) => {
-                                setTempUser({
-                                  ...tempUser,
-                                  "Additional Contact Name": e.target.value,
-                                });
-                              }}
-                            />
-                          ) : (
-                            <p className="text-base font-bold">
-                              {tempUser["Additional Contact Name"]}
-                            </p>
-                          )}
-                        </div>
-                        <div className="mb-3">
-                          <p className="text-base">phone_number:</p>
-                          {edit ? (
-                            <input
-                              type="text"
-                              className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                              value={tempUser["Additional Contact Number"]}
-                              onChange={(e) => {
-                                setTempUser({
-                                  ...tempUser,
-                                  "Additional Contact Number": e.target.value,
-                                });
-                              }}
-                            />
-                          ) : (
-                            <p className="text-base font-bold">
-                              {tempUser["Additional Contact Number"]}
-                            </p>
-                          )}
-                        </div>
-                        <div className="mb-3">
-                          <p className="text-base">Salary Range:</p>
-
-                          {edit ? (
-                            <input
-                              type="text"
-                              className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                              value={
-                                tempUser["Additional Contact Salary Range"]
-                              }
-                              onChange={(e) => {
-                                setTempUser({
-                                  ...tempUser,
-                                  "Additional Contact Salary Range":
-                                    e.target.value,
-                                });
-                              }}
-                            />
-                          ) : (
-                            <p className="text-base font-bold">
-                              {tempUser["Additional Contact Salary Range"]}
-                            </p>
-                          )}
-                        </div>
-                      </div> */}
-                      {user["user_data"]["edad"]}
+                        {Object.keys(tempUser["user_data"]).map(
+                          (key, value) => {
+                            return (
+                              <>
+                                <div className="mb-3">
+                                  <p className="text-base">
+                                    {key[0].toUpperCase() + key.slice(1)}:
+                                  </p>
+                                  {edit ? (
+                                    <input
+                                      type="text"
+                                      className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
+                                      value={tempUser["user_data"][key]}
+                                      onChange={(e) => {
+                                        setTempUser({
+                                          ...tempUser,
+                                          user_data: {
+                                            ...tempUser["user_data"],
+                                            [key]: e.target.value,
+                                          },
+                                        });
+                                      }}
+                                    />
+                                  ) : (
+                                    <p className="text-base font-bold">
+                                      {isArray(tempUser["user_data"][key])
+                                        ? tempUser["user_data"][key].join(", ")
+                                        : tempUser["user_data"][key]}
+                                    </p>
+                                  )}
+                                </div>
+                              </>
+                            );
+                          }
+                        )}
+                      </div>
+                      {/* Show all the values inside the user[user_data] object */}
 
                       <div className="mb-3">
                         <p className="text-base font-bold text-gray-500">
