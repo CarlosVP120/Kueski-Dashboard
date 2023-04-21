@@ -58,60 +58,38 @@ const ShowInfoModal = ({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        // <Text>Name: {user["Name"]}</Text>
-        // <Text>first_last_name: {user["first_last_name"]}</Text>
-        // <Text>second_last_name: {user["second_last_name"]}</Text>
-        // <Text>born_date: {user["born_date"]}</Text>
-        // <Text>nationality: {user["nationality"]}</Text>
-        // <Text>state_of_birth: {user["state_of_birth"]}</Text>
-        // <Text>economic_activity: {user["economic_activity"]}</Text>
-        // <Text>curp: {user["curp"]}</Text>
-        // <Text>rfc: {user["rfc"]}</Text>
-        // <Text>gender: {user["gender"]}</Text>
-        // <Text>phone_number: {user["phone_number"]}</Text>
-        // <Text>email: {user["email"]}</Text>
-        // <Text>country: {user["country"]}</Text>
-        // <Text>State: {user["State"]}</Text>
-        // <Text>city: {user["city"]}</Text>
-        // <Text>neighborhood: {user["neighborhood"]}</Text>
-        // <Text>zip_code: {user["zip_code"]}</Text>
-        // <Text>street: {user["street"]}</Text>
-        // <Text>ext_number: {user["ext_number"]}</Text>
-        // <Text>int_number: {user["int_number"]}</Text>
-        // <Text>Additional Contact Name: {user["Additional Contact Name"]}</Text>
-        // <Text>
-        //   Additional Contact Number: {user["Additional Contact Number"]}
-        // </Text>
-        // <Text>
-        //   Additional Contact Salary Range:{" "}
-        //   {user["Additional Contact Salary Range"]}
-        // </Text>
-        // <Text>identification_type: {user["identification_type"]}</Text>
-        // <Text>identification_reference: {user["identification_reference"]}</Text>
+        // Get only the values that are different between the user and the tempUser
+        ...Object.keys(user).reduce((acc, key) => {
+          if (user[key] !== tempUser[key]) {
+            // set type any to avoid error
+            (acc as any)[key] = tempUser[key];
+          }
+          return acc;
+        }, {}),
 
-        user_id: user["user_id"],
-        user_name: tempUser["user_name"],
-        first_last_name: tempUser["first_last_name"],
-        second_last_name: tempUser["second_last_name"],
-        born_date: tempUser["born_date"],
-        nationality: tempUser["nationality"],
-        state_of_birth: tempUser["state_of_birth"],
-        economic_activity: tempUser["economic_activity"],
-        curp: tempUser["curp"],
-        rfc: tempUser["rfc"],
-        gender: tempUser["gender"],
-        phone_number: tempUser["phone_number"],
-        email: tempUser["email"],
-        country: tempUser["country"],
-        State: tempUser["State"],
-        city: tempUser["city"],
-        neighborhood: tempUser["neighborhood"],
-        zip_code: tempUser["zip_code"],
-        street: tempUser["street"],
-        ext_number: tempUser["ext_number"],
-        int_number: tempUser["int_number"],
-        identification_type: tempUser["identification_type"],
-        identification_reference: tempUser["identification_reference"],
+        // user_id: user["user_id"],
+        // user_name: tempUser["user_name"],
+        // first_last_name: tempUser["first_last_name"],
+        // second_last_name: tempUser["second_last_name"],
+        // born_date: tempUser["born_date"],
+        // nationality: tempUser["nationality"],
+        // state_of_birth: tempUser["state_of_birth"],
+        // economic_activity: tempUser["economic_activity"],
+        // curp: tempUser["curp"],
+        // rfc: tempUser["rfc"],
+        // gender: tempUser["gender"],
+        // phone_number: tempUser["phone_number"],
+        // email: tempUser["email"],
+        // country: tempUser["country"],
+        // State: tempUser["State"],
+        // city: tempUser["city"],
+        // neighborhood: tempUser["neighborhood"],
+        // zip_code: tempUser["zip_code"],
+        // street: tempUser["street"],
+        // ext_number: tempUser["ext_number"],
+        // int_number: tempUser["int_number"],
+        // identification_type: tempUser["identification_type"],
+        // identification_reference: tempUser["identification_reference"],
       }),
     })
       .then((res) => res.json())
@@ -153,7 +131,7 @@ const ShowInfoModal = ({
                     className="text-2xl leading-6 font-bold text-gray-900 "
                     id="modal-headline"
                   >
-                    Acceso - {""}
+                    {edit ? "Rectificación - " : "Acceso - "}
                     <span className="text-blue-600">
                       {tempUser["user_name"]} {tempUser["first_last_name"]}{" "}
                       {tempUser["second_last_name"]}

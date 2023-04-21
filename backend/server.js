@@ -89,40 +89,65 @@ app.patch("/editUser/:id", async (req, res) => {
   const userId = req.params.id;
   const updatedUserData = req.body;
 
-  const sql =
-    "UPDATE users SET user_name = ?, first_last_name = ?, second_last_name = ?, born_date = ?, nationality = ?, state_of_birth = ?, economic_activity = ?, curp = ?, rfc = ?, gender = ?, phone_number = ?, email = ?, country = ?, state = ?, city = ?, neighborhood = ?, zip_code = ?, street = ?, ext_number = ?, int_number = ?, identification_type = ?, identification_number = ? WHERE user_id = ?";
-  const values = [
-    updatedUserData.user_name,
-    updatedUserData["first_last_name"],
-    updatedUserData["second_last_name"],
-    updatedUserData["born_date"],
-    updatedUserData.nationality,
-    updatedUserData["state_of_birth"],
-    updatedUserData["economic_activity"],
-    updatedUserData.curp,
-    updatedUserData.rfc,
-    updatedUserData.gender,
-    updatedUserData["phone_number"],
-    updatedUserData.email,
-    updatedUserData.country,
-    updatedUserData.state,
-    updatedUserData.city,
-    updatedUserData.neighborhood,
-    updatedUserData["zip_code"],
-    updatedUserData.street,
-    updatedUserData["ext_number"],
-    updatedUserData["int_number"],
-    // updatedUserData["Additional Contact Name"],
-    // updatedUserData["Additional Contact Number"],
-    // updatedUserData["Additional Contact Salary Range"],
-    updatedUserData["identification_type"],
-    updatedUserData["identification_number"],
-    userId,
+  const users_table = [
+    "user_name",
+    "first_last_name",
+    "second_last_name",
+    "born_date",
+    "nationality",
+    "state_of_birth",
+    "economic_activity",
+    "curp",
+    "rfc",
+    "gender",
+    "phone_number",
+    "email",
   ];
 
+  const addresses_table = [
+    "country",
+    "state",
+    "city",
+    "neighborhood",
+    "zip_code",
+    "street",
+    "ext_number",
+    "int_number",
+  ];
+
+  // Update only the users table based on the updatedUserData object
+  let sql = "UPDATE users SET ";
+  let values = [];
+  for (let i = 0; i < users_table.length; i++) {
+    if (updatedUserData[users_table[i]]) {
+      sql += `${users_table[i]} = ?, `;
+      values.push(updatedUserData[users_table[i]]);
+    }
+  }
+  sql = sql.slice(0, -2);
+  sql += " WHERE user_id = ?";
+  values.push(userId);
+
+  // Update only the addresses table based on the updatedUserData object
+  let sql2 = "UPDATE addresses SET ";
+  let values2 = [];
+  for (let i = 0; i < addresses_table.length; i++) {
+    if (updatedUserData[addresses_table[i]]) {
+      sql2 += `${addresses_table[i]} = ?, `;
+      values2.push(updatedUserData[addresses_table[i]]);
+    }
+  }
+  sql2 = sql2.slice(0, -2);
+  sql2 += " WHERE user_id = ?";
+  values2.push(userId);
+
+  // execute the queries
   db.query(sql, values, (err, result) => {
-    if (err) res.send({ message: "Error updating user" });
-    res.send({ message: "User updated successfully" });
+    if (err) throw err;
+    db.query(sql2, values2, (err, result) => {
+      if (err) res.send({ message: "Error updating user" });
+      res.send({ message: "User updated successfully" });
+    });
   });
 });
 
