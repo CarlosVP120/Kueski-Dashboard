@@ -44,15 +44,23 @@ const LeftSidebar = ({
             Oposición
           </h1>
         </div>
-        <h1
-          className="text-white text-2xl font-bold mt-4 cursor-pointer hover:text-blue-400 transition duration-300 ease-in-out"
-          onClick={() => {
-            auth.signOut();
-            router.replace("/login");
-          }}
-        >
-          Cerrar Sesión
-        </h1>
+        <div className="">
+          <h1
+            className="text-white text-2xl font-bold mt-4 cursor-pointer hover:text-blue-400 transition duration-300 ease-in-out"
+            onClick={() => setOption("Historial")}
+          >
+            Historial
+          </h1>
+          <h1
+            className="text-white text-2xl font-bold mt-4 cursor-pointer hover:text-blue-400 transition duration-300 ease-in-out"
+            onClick={() => {
+              auth.signOut();
+              router.replace("/login");
+            }}
+          >
+            Cerrar Sesión
+          </h1>
+        </div>
       </div>
     </div>
   );
