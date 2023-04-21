@@ -3,16 +3,21 @@ import cors from "cors";
 import mysql from "mysql";
 import bodyParser from "body-parser";
 
+const PORT = process.env.PORT || 3001;
+
 const app = express();
+
 app.use(cors());
-app.use(express.json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// const db = mysql.createConnection({
+// const connection = mysql.createConnection({
 //   host: "localhost",
-//   user: "root",
-//   password: "",
-//   database: "Kueski",
+//   user: "db_user",
+//   password: "admin",
+//   database: "kueski",
+//   port: 3306,
+//   multipleStatements: true,
 // });
 
 const db = mysql.createConnection({
@@ -21,6 +26,7 @@ const db = mysql.createConnection({
   password: "admin123",
   port: "3306",
   database: "kueski",
+  multipleStatements: true,
 });
 
 db.connect(function (error) {
@@ -31,59 +37,34 @@ db.connect(function (error) {
   }
 });
 
-//Establish the Port
-app.listen(5000, function check(error) {
-  if (error) {
-    console.log("Error....");
-  } else {
-    console.log("Server is running on port 5000");
-  }
-});
+// function connectionTemplate(connection, query) {
+//   connection.connect();
+//   query();
+//   connection.end();
+// }
 
-app.get("/getUsers", async (req, res) => {
-  // join the users, addresses, and identifications tables by user_id
-  // const sql =
-  //   "SELECT * FROM users INNER JOIN addresses ON users.user_id = addresses.user_id";
-
-  const sql =
-    "SELECT * FROM users INNER JOIN addresses ON users.user_id = addresses.user_id INNER JOIN identifications ON users.user_id = identifications.user_id";
-
-  db.query(sql, (err, result) => {
+app.get("/api/users", async (req, res) => {
+  let sqlQuery = "SELECT user_id, user_name, nationality FROM users;";
+  connection.query(sqlQuery, (err, rows) => {
     if (err) throw err;
-    res.send({ data: result });
+    res.send(rows);
   });
 });
 
-// <Text>Name: {user["Name"]}</Text>
-// <Text>First Last Name: {user["First Last Name"]}</Text>
-// <Text>Second Last Name: {user["Second Last Name"]}</Text>
-// <Text>Born Date: {user["Born Date"]}</Text>
-// <Text>Nationality: {user["Nationality"]}</Text>
-// <Text>State of Birth: {user["State of Birth"]}</Text>
-// <Text>Economic Activity: {user["Economic Activity"]}</Text>
-// <Text>CURP: {user["CURP"]}</Text>
-// <Text>RFC: {user["RFC"]}</Text>
-// <Text>Gender: {user["Gender"]}</Text>
-// <Text>Phone Number: {user["Phone Number"]}</Text>
-// <Text>Email: {user["Email"]}</Text>
-// <Text>Country: {user["Country"]}</Text>
-// <Text>State: {user["State"]}</Text>
-// <Text>City: {user["City"]}</Text>
-// <Text>Neighborhood: {user["Neighborhood"]}</Text>
-// <Text>ZIP Code: {user["ZIP Code"]}</Text>
-// <Text>Street: {user["Street"]}</Text>
-// <Text>Ext Number: {user["Ext Number"]}</Text>
-// <Text>Int Number: {user["Int Number"]}</Text>
-// <Text>Additional Contact Name: {user["Additional Contact Name"]}</Text>
-// <Text>
-//   Additional Contact Number: {user["Additional Contact Number"]}
-// </Text>
-// <Text>
-//   Additional Contact Salary Range:{" "}
-//   {user["Additional Contact Salary Range"]}
-// </Text>
-// <Text>Identification Type: {user["Identification Type"]}</Text>
-// <Text>Identification Number: {user["Identification Number"]}</Text>
+app.get("/api/users/:id", async (req, res) => {
+  let sqlQuery = "SELECT * FROM users WHERE user_id = ?;";
+  const userId = req.params.id;
+  connection.query(sqlQuery, userId, (err, row) => {
+    if (err) throw err;
+    res.send(row[0]);
+  });
+});
+
+app.patch("/api/users/:id", async (req, res) => {
+  const userId = req.params.id;
+  const changes = req.body;
+  res.send(changes);
+});
 
 app.patch("/editUser/:id", async (req, res) => {
   const userId = req.params.id;
@@ -126,12 +107,21 @@ app.patch("/editUser/:id", async (req, res) => {
   });
 });
 
-app.delete("/deleteUser", async (req, res) => {
-  const sql = "DELETE FROM User WHERE IsUser = ?";
-  const values = [true];
-
-  db.query(sql, values, (err, result) => {
+app.delete("/api/users/:id", async (req, res) => {
+  const userId = req.params.id;
+  let sqlQuery =
+    "CALL eliminarUsuario(?, @verificacion); SELECT @verificacion;";
+  connection.query(sqlQuery, userId, (err, row) => {
     if (err) throw err;
-    res.send({ message: "Usuarios eliminados exitosamente" });
+    const accVerificacion = row[1][0];
+    res.send(accVerificacion);
   });
+});
+
+app.listen(PORT, (error) => {
+  if (error) {
+    console.log("Error...");
+  } else {
+    console.log(`Server listening on ${PORT}`);
+  }
 });
