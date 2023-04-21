@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import PDFView from "./PDF";
+import { type } from "os";
 
 const ShowInfoModal = ({
   setShowInfo,
@@ -49,25 +50,25 @@ const ShowInfoModal = ({
       },
       body: JSON.stringify({
         // <Text>Name: {user["Name"]}</Text>
-        // <Text>First Last Name: {user["First Last Name"]}</Text>
-        // <Text>Second Last Name: {user["Second Last Name"]}</Text>
-        // <Text>Born Date: {user["Born Date"]}</Text>
-        // <Text>Nationality: {user["Nationality"]}</Text>
-        // <Text>State of Birth: {user["State of Birth"]}</Text>
-        // <Text>Economic Activity: {user["Economic Activity"]}</Text>
-        // <Text>CURP: {user["CURP"]}</Text>
-        // <Text>RFC: {user["RFC"]}</Text>
-        // <Text>Gender: {user["Gender"]}</Text>
-        // <Text>Phone Number: {user["Phone Number"]}</Text>
-        // <Text>Email: {user["Email"]}</Text>
-        // <Text>Country: {user["Country"]}</Text>
+        // <Text>first_last_name: {user["first_last_name"]}</Text>
+        // <Text>second_last_name: {user["second_last_name"]}</Text>
+        // <Text>born_date: {user["born_date"]}</Text>
+        // <Text>nationality: {user["nationality"]}</Text>
+        // <Text>state_of_birth: {user["state_of_birth"]}</Text>
+        // <Text>economic_activity: {user["economic_activity"]}</Text>
+        // <Text>curp: {user["curp"]}</Text>
+        // <Text>rfc: {user["rfc"]}</Text>
+        // <Text>gender: {user["gender"]}</Text>
+        // <Text>phone_number: {user["phone_number"]}</Text>
+        // <Text>email: {user["email"]}</Text>
+        // <Text>country: {user["country"]}</Text>
         // <Text>State: {user["State"]}</Text>
-        // <Text>City: {user["City"]}</Text>
-        // <Text>Neighborhood: {user["Neighborhood"]}</Text>
-        // <Text>ZIP Code: {user["ZIP Code"]}</Text>
-        // <Text>Street: {user["Street"]}</Text>
-        // <Text>Ext Number: {user["Ext Number"]}</Text>
-        // <Text>Int Number: {user["Int Number"]}</Text>
+        // <Text>city: {user["city"]}</Text>
+        // <Text>neighborhood: {user["neighborhood"]}</Text>
+        // <Text>zip_code: {user["zip_code"]}</Text>
+        // <Text>street: {user["street"]}</Text>
+        // <Text>ext_number: {user["ext_number"]}</Text>
+        // <Text>int_number: {user["int_number"]}</Text>
         // <Text>Additional Contact Name: {user["Additional Contact Name"]}</Text>
         // <Text>
         //   Additional Contact Number: {user["Additional Contact Number"]}
@@ -76,36 +77,36 @@ const ShowInfoModal = ({
         //   Additional Contact Salary Range:{" "}
         //   {user["Additional Contact Salary Range"]}
         // </Text>
-        // <Text>Identification Type: {user["Identification Type"]}</Text>
-        // <Text>Identification Number: {user["Identification Number"]}</Text>
+        // <Text>identification_type: {user["identification_type"]}</Text>
+        // <Text>identification_reference: {user["identification_reference"]}</Text>
 
-        "User ID": user["User ID"],
-        Name: tempUser["Name"],
-        "First Last Name": tempUser["First Last Name"],
-        "Second Last Name": tempUser["Second Last Name"],
-        "Born Date": tempUser["Born Date"],
-        Nationality: tempUser["Nationality"],
-        "State of Birth": tempUser["State of Birth"],
-        "Economic Activity": tempUser["Economic Activity"],
-        CURP: tempUser["CURP"],
-        RFC: tempUser["RFC"],
-        Gender: tempUser["Gender"],
-        "Phone Number": tempUser["Phone Number"],
-        Email: tempUser["Email"],
-        Country: tempUser["Country"],
+        user_id: user["user_id"],
+        user_name: tempUser["user_name"],
+        first_last_name: tempUser["first_last_name"],
+        second_last_name: tempUser["second_last_name"],
+        born_date: tempUser["born_date"],
+        nationality: tempUser["nationality"],
+        state_of_birth: tempUser["state_of_birth"],
+        economic_activity: tempUser["economic_activity"],
+        curp: tempUser["curp"],
+        rfc: tempUser["rfc"],
+        gender: tempUser["gender"],
+        phone_number: tempUser["phone_number"],
+        email: tempUser["email"],
+        country: tempUser["country"],
         State: tempUser["State"],
-        City: tempUser["City"],
-        Neighborhood: tempUser["Neighborhood"],
-        "ZIP Code": tempUser["ZIP Code"],
-        Street: tempUser["Street"],
-        "Ext Number": tempUser["Ext Number"],
-        "Int Number": tempUser["Int Number"],
+        city: tempUser["city"],
+        neighborhood: tempUser["neighborhood"],
+        zip_code: tempUser["zip_code"],
+        street: tempUser["street"],
+        ext_number: tempUser["ext_number"],
+        int_number: tempUser["int_number"],
         "Additional Contact Name": tempUser["Additional Contact Name"],
         "Additional Contact Number": tempUser["Additional Contact Number"],
         "Additional Contact Salary Range":
           tempUser["Additional Contact Salary Range"],
-        "Identification Type": tempUser["Identification Type"],
-        "Identification Number": tempUser["Identification Number"],
+        identification_type: tempUser["identification_type"],
+        identification_reference: tempUser["identification_reference"],
       }),
     })
       .then((res) => res.json())
@@ -149,7 +150,8 @@ const ShowInfoModal = ({
                   >
                     Acceso - {""}
                     <span className="text-blue-600">
-                      {tempUser["Name"]} {tempUser["Second Last Name"]}
+                      {tempUser["user_name"]} {tempUser["first_last_name"]}{" "}
+                      {tempUser["second_last_name"]}
                     </span>
                   </h1>
                   <div className="flex gap-3">
@@ -200,7 +202,7 @@ const ShowInfoModal = ({
                     <PDFDownloadLink
                       className="flex px-3 py-2 font-bold bg-blue-600 text-white rounded-2xl shadow-md hover:bg-blue-700 transition duration-200 items-center"
                       document={<PDFView user={user} />}
-                      fileName={`${user["Name"]}_${user["Second Last Name"]}.pdf`}
+                      fileName={`${user["Name"]}_${user["second_last_name"]}.pdf`}
                     >
                       {({ blob, url, loading, error }) =>
                         loading ? "Cargando..." : "Generar Reporte"
@@ -244,17 +246,17 @@ const ShowInfoModal = ({
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["Name"]}
+                            value={tempUser["user_name"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                Name: e.target.value,
+                                user_name: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["Name"]}
+                            {tempUser["user_name"]}
                           </p>
                         )}
                       </div>
@@ -264,17 +266,17 @@ const ShowInfoModal = ({
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["First Last Name"]}
+                            value={tempUser["first_last_name"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                "First Last Name": e.target.value,
+                                first_last_name: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["First Last Name"]}
+                            {tempUser["first_last_name"]}
                           </p>
                         )}
                       </div>
@@ -284,37 +286,37 @@ const ShowInfoModal = ({
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["Second Last Name"]}
+                            value={tempUser["second_last_name"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                "Second Last Name": e.target.value,
+                                second_last_name: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["Second Last Name"]}
+                            {tempUser["second_last_name"]}
                           </p>
                         )}
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">Born Date:</p>
+                        <p className="text-base">born_date:</p>
                         {edit ? (
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["Born Date"]}
+                            value={tempUser["born_date"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                "Born Date": e.target.value,
+                                born_date: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["Born Date"]}
+                            {tempUser["born_date"]}
                           </p>
                         )}
                       </div>
@@ -324,17 +326,17 @@ const ShowInfoModal = ({
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["Nationality"]}
+                            value={tempUser["nationality"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                Nationality: e.target.value,
+                                nationality: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["Nationality"]}
+                            {tempUser["nationality"]}
                           </p>
                         )}
                       </div>
@@ -344,37 +346,37 @@ const ShowInfoModal = ({
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["State of Birth"]}
+                            value={tempUser["state_of_birth"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                "State of Birth": e.target.value,
+                                state_of_birth: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["State of Birth"]}
+                            {tempUser["state_of_birth"]}
                           </p>
                         )}
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">Economic Activity:</p>
+                        <p className="text-base">Economic_Activity:</p>
                         {edit ? (
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["Economic Activity"]}
+                            value={tempUser["economic_activity"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                "Economic Activity": e.target.value,
+                                economic_activity: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["Economic Activity"]}
+                            {tempUser["economic_activity"]}
                           </p>
                         )}
                       </div>
@@ -384,17 +386,17 @@ const ShowInfoModal = ({
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["CURP"]}
+                            value={tempUser["curp"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                CURP: e.target.value,
+                                curp: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["CURP"]}
+                            {tempUser["curp"]}
                           </p>
                         )}
                       </div>
@@ -404,17 +406,17 @@ const ShowInfoModal = ({
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["RFC"]}
+                            value={tempUser["rfc"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                RFC: e.target.value,
+                                rfc: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["RFC"]}
+                            {tempUser["rfc"]}
                           </p>
                         )}
                       </div>
@@ -424,17 +426,17 @@ const ShowInfoModal = ({
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["Gender"]}
+                            value={tempUser["gender"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                Gender: e.target.value,
+                                gender: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["Gender"]}
+                            {tempUser["gender"]}
                           </p>
                         )}
                       </div>
@@ -447,17 +449,17 @@ const ShowInfoModal = ({
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["Phone Number"]}
+                            value={tempUser["phone_number"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                "Phone Number": e.target.value,
+                                phone_number: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["Phone Number"]}
+                            {tempUser["phone_number"]}
                           </p>
                         )}
                       </div>
@@ -467,17 +469,17 @@ const ShowInfoModal = ({
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["Email"]}
+                            value={tempUser["email"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                Email: e.target.value,
+                                email: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["Email"]}
+                            {tempUser["email"]}
                           </p>
                         )}
                       </div>
@@ -493,17 +495,17 @@ const ShowInfoModal = ({
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["Country"]}
+                            value={tempUser["country"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                Country: e.target.value,
+                                country: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["Country"]}
+                            {tempUser["country"]}
                           </p>
                         )}
                       </div>
@@ -513,17 +515,17 @@ const ShowInfoModal = ({
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["State"]}
+                            value={tempUser["state"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                State: e.target.value,
+                                state: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["State"]}
+                            {tempUser["state"]}
                           </p>
                         )}
                       </div>
@@ -533,17 +535,17 @@ const ShowInfoModal = ({
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["City"]}
+                            value={tempUser["city"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                City: e.target.value,
+                                city: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["City"]}
+                            {tempUser["city"]}
                           </p>
                         )}
                       </div>
@@ -553,17 +555,17 @@ const ShowInfoModal = ({
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["Neighborhood"]}
+                            value={tempUser["neighborhood"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                Neighborhood: e.target.value,
+                                neighborhood: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["Neighborhood"]}
+                            {tempUser["neighborhood"]}
                           </p>
                         )}
                       </div>
@@ -573,17 +575,17 @@ const ShowInfoModal = ({
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["ZIP Code"]}
+                            value={tempUser["zip_code"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                "ZIP Code": e.target.value,
+                                zip_code: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["ZIP Code"]}
+                            {tempUser["zip_code"]}
                           </p>
                         )}
                       </div>
@@ -593,17 +595,17 @@ const ShowInfoModal = ({
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["Street"]}
+                            value={tempUser["street"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                Street: e.target.value,
+                                street: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["Street"]}
+                            {tempUser["street"]}
                           </p>
                         )}
                       </div>
@@ -613,17 +615,17 @@ const ShowInfoModal = ({
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["Ext Number"]}
+                            value={tempUser["ext_number"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                "Ext Number": e.target.value,
+                                ext_number: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["Ext Number"]}
+                            {tempUser["ext_number"]}
                           </p>
                         )}
                       </div>
@@ -633,24 +635,24 @@ const ShowInfoModal = ({
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["Int Number"]}
+                            value={tempUser["int_number"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                "Int Number": e.target.value,
+                                int_number: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["Int Number"]}
+                            {tempUser["int_number"]}
                           </p>
                         )}
                       </div>
                     </div>
                     {/* Third Column */}
                     <div className="flex-column text-left w-full">
-                      <div className="bg-gray-200 p-4 mb-3 rounded-xl">
+                      {/* <div className="bg-gray-200 p-4 mb-3 rounded-xl">
                         <div className="mb-3">
                           <p className="text-base font-bold text-gray-500">
                             Additional Contact Information:{" "}
@@ -678,7 +680,7 @@ const ShowInfoModal = ({
                           )}
                         </div>
                         <div className="mb-3">
-                          <p className="text-base">Phone Number:</p>
+                          <p className="text-base">phone_number:</p>
                           {edit ? (
                             <input
                               type="text"
@@ -721,7 +723,9 @@ const ShowInfoModal = ({
                             </p>
                           )}
                         </div>
-                      </div>
+                      </div> */}
+                      {user["user_data"]["edad"]}
+
                       <div className="mb-3">
                         <p className="text-base font-bold text-gray-500">
                           Identifications:{" "}
@@ -734,37 +738,37 @@ const ShowInfoModal = ({
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["Identification Type"]}
+                            value={tempUser["identification_type"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                "Identification Type": e.target.value,
+                                identification_type: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["Identification Type"]}
+                            {tempUser["identification_type"]}
                           </p>
                         )}
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">Identification Number:</p>
+                        <p className="text-base">Identification Reference:</p>
                         {edit ? (
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["Identification Number"]}
+                            value={tempUser["identification_reference"]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
-                                "Identification Number": e.target.value,
+                                identification_reference: e.target.value,
                               });
                             }}
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["Identification Number"]}
+                            {tempUser["identification_reference"]}
                           </p>
                         )}
                       </div>

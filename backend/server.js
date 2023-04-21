@@ -41,7 +41,13 @@ app.listen(5000, function check(error) {
 });
 
 app.get("/getUsers", async (req, res) => {
-  let sql = "SELECT * FROM users";
+  // join the users, addresses, and identifications tables by user_id
+  // const sql =
+  //   "SELECT * FROM users INNER JOIN addresses ON users.user_id = addresses.user_id";
+
+  const sql =
+    "SELECT * FROM users INNER JOIN addresses ON users.user_id = addresses.user_id INNER JOIN identifications ON users.user_id = identifications.user_id";
+
   db.query(sql, (err, result) => {
     if (err) throw err;
     res.send({ data: result });
@@ -84,33 +90,33 @@ app.patch("/editUser/:id", async (req, res) => {
   const updatedUserData = req.body;
 
   const sql =
-    "UPDATE Users SET `Name` = ?, `First Last Name` = ?, `Second Last Name` = ?, `Born Date` = ?, `Nationality` = ?, `State of Birth` = ?, `Economic Activity` = ?, `CURP` = ?, `RFC` = ?, `Gender` = ?, `Phone Number` = ?, `Email` = ?, `Country` = ?, `State` = ?, `City` = ?, `Neighborhood` = ?, `ZIP Code` = ?, `Street` = ?, `Ext Number` = ?, `Int Number` = ?, `Additional Contact Name` = ?, `Additional Contact Number` = ?, `Additional Contact Salary Range` = ?, `Identification Type` = ?, `Identification Number` = ? WHERE `User ID` = ?";
+    "UPDATE Users SET `user_name` = ?, `first_last_name` = ?, `second_last_name` = ?, `born_date` = ?, `nationality` = ?, `state_of_birth` = ?, `economic_activity` = ?, `curp` = ?, `rfc` = ?, `gender` = ?, `phone_number` = ?, `email` = ?, `country` = ?, `state` = ?, `city` = ?, `neighborhood` = ?, `zip_code` = ?, `street` = ?, `ext_number` = ?, `int_number` = ?, `identification_type` = ?, `identification_number` = ? WHERE `User ID` = ?";
   const values = [
-    updatedUserData.Name,
-    updatedUserData["First Last Name"],
-    updatedUserData["Second Last Name"],
-    updatedUserData["Born Date"],
-    updatedUserData.Nationality,
-    updatedUserData["State of Birth"],
-    updatedUserData["Economic Activity"],
-    updatedUserData.CURP,
-    updatedUserData.RFC,
-    updatedUserData.Gender,
-    updatedUserData["Phone Number"],
-    updatedUserData.Email,
-    updatedUserData.Country,
-    updatedUserData.State,
-    updatedUserData.City,
-    updatedUserData.Neighborhood,
-    updatedUserData["ZIP Code"],
-    updatedUserData.Street,
-    updatedUserData["Ext Number"],
-    updatedUserData["Int Number"],
-    updatedUserData["Additional Contact Name"],
-    updatedUserData["Additional Contact Number"],
-    updatedUserData["Additional Contact Salary Range"],
-    updatedUserData["Identification Type"],
-    updatedUserData["Identification Number"],
+    updatedUserData.user_name,
+    updatedUserData["first_last_name"],
+    updatedUserData["second_last_name"],
+    updatedUserData["born_date"],
+    updatedUserData.nationality,
+    updatedUserData["state_of_birth"],
+    updatedUserData["economic_activity"],
+    updatedUserData.curp,
+    updatedUserData.rfc,
+    updatedUserData.gender,
+    updatedUserData["phone_number"],
+    updatedUserData.email,
+    updatedUserData.country,
+    updatedUserData.state,
+    updatedUserData.city,
+    updatedUserData.neighborhood,
+    updatedUserData["zip_code"],
+    updatedUserData.street,
+    updatedUserData["ext_number"],
+    updatedUserData["int_number"],
+    // updatedUserData["Additional Contact Name"],
+    // updatedUserData["Additional Contact Number"],
+    // updatedUserData["Additional Contact Salary Range"],
+    updatedUserData["identification_type"],
+    updatedUserData["identification_number"],
     userId,
   ];
 

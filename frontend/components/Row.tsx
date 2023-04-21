@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ShowInfoModal from "./ShowInfoModal";
+import { type } from "os";
 
 const Row = ({
   user,
@@ -13,7 +14,6 @@ const Row = ({
   const [open, setOpen] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const [edit, setEdit] = useState(false);
-
   return (
     <>
       <tr
@@ -27,14 +27,14 @@ const Row = ({
           scope="row"
           className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap "
         >
-          {user["User ID"]}
+          {user["user_id"]}
         </th>
-        <td className="px-4 py-4">{user["Email"]}</td>
-        <td className="px-4 py-4">{user["Name"]}</td>
-        <td className="px-4 py-4">{user["First Last Name"]}</td>
-        <td className="px-4 py-4">{user["Second Last Name"]}</td>
-        <td className="px-4 py-4">{user["CURP"]}</td>
-        <td className="px-4 py-4">{user["RFC"]}</td>
+        <td className="px-4 py-4">{user["email"]}</td>
+        <td className="px-4 py-4">{user["user_name"]}</td>
+        <td className="px-4 py-4">{user["first_last_name"]}</td>
+        <td className="px-4 py-4">{user["second_last_name"]}</td>
+        <td className="px-4 py-4">{user["curp"]}</td>
+        <td className="px-4 py-4">{user["rfc"]}</td>
         <td
           className="px-4 py-4 text-center flex flex-col justify-center items-center"
           onClick={() => setOpen(!open)}

@@ -17,9 +17,9 @@ const DashboardComponent = ({
   // filter the data to show only the ones that match the search by name
   data = data?.filter((user: any) => {
     return (
-      user["Name"].toLowerCase().includes(search.toLowerCase()) ||
-      user["First Last Name"].toLowerCase().includes(search.toLowerCase()) ||
-      user["Second Last Name"].toLowerCase().includes(search.toLowerCase())
+      user["user_name"].toLowerCase().includes(search.toLowerCase()) ||
+      user["first_last_name"].toLowerCase().includes(search.toLowerCase()) ||
+      user["second_last_name"].toLowerCase().includes(search.toLowerCase())
     );
   });
 
