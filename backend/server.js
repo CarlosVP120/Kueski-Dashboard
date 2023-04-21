@@ -40,17 +40,35 @@ app.listen(5000, function check(error) {
   }
 });
 
+// app.get("/getUsers", async (req, res) => {
+//   // join the users, addresses, and identifications tables by user_id
+//   // const sql =
+//   //   "SELECT * FROM users INNER JOIN addresses ON users.user_id = addresses.user_id";
+
+//   const sql =
+//     "SELECT * FROM users INNER JOIN addresses ON users.user_id = addresses.user_id INNER JOIN identifications ON users.user_id = identifications.user_id";
+
+//   db.query(sql, (err, result) => {
+//     if (err) throw err;
+//     res.send({ data: result });
+//   });
+// });
+
 app.get("/getUsers", async (req, res) => {
-  // join the users, addresses, and identifications tables by user_id
-  // const sql =
-  //   "SELECT * FROM users INNER JOIN addresses ON users.user_id = addresses.user_id";
-
-  const sql =
-    "SELECT * FROM users INNER JOIN addresses ON users.user_id = addresses.user_id INNER JOIN identifications ON users.user_id = identifications.user_id";
-
-  db.query(sql, (err, result) => {
+  let sqlQuery =
+    "SELECT user_id, email, user_name,first_last_name, second_last_name, curp, rfc FROM users;";
+  db.query(sqlQuery, (err, rows) => {
     if (err) throw err;
-    res.send({ data: result });
+    res.send({ data: rows });
+  });
+});
+
+app.get("/api/users/:id", async (req, res) => {
+  let sqlQuery = "SELECT * FROM users WHERE user_id = ?;";
+  const userId = req.params.id;
+  connection.query(sqlQuery, userId, (err, row) => {
+    if (err) throw err;
+    res.send(row[0]);
   });
 });
 
@@ -167,12 +185,13 @@ app.patch("/editUser/:id", async (req, res) => {
   }
 });
 
-app.delete("/deleteUser", async (req, res) => {
-  const sql = "DELETE FROM User WHERE IsUser = ?";
-  const values = [true];
-
-  db.query(sql, values, (err, result) => {
+app.delete("/api/users/:id", async (req, res) => {
+  const userId = req.params.id;
+  let sqlQuery =
+    "CALL eliminarUsuario(?, @verificacion); SELECT @verificacion;";
+  connection.query(sqlQuery, userId, (err, row) => {
     if (err) throw err;
-    res.send({ message: "Usuarios eliminados exitosamente" });
+    const accVerificacion = row[1][0];
+    res.send(accVerificacion);
   });
 });
