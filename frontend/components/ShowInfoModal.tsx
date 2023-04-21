@@ -284,12 +284,12 @@ const ShowInfoModal = ({
                         )}
                       </div>
                       <div className="mb-3">
-                        <p className="text-base">born_date:</p>
+                        <p className="text-base">Born Date:</p>
                         {edit ? (
                           <input
                             type="text"
                             className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                            value={tempUser["born_date"]}
+                            value={tempUser["born_date"].split("T")[0]}
                             onChange={(e) => {
                               setTempUser({
                                 ...tempUser,
@@ -299,7 +299,7 @@ const ShowInfoModal = ({
                           />
                         ) : (
                           <p className="text-base font-bold">
-                            {tempUser["born_date"]}
+                            {tempUser["born_date"].split("T")[0]}
                           </p>
                         )}
                       </div>
