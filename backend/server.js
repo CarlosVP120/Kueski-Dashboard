@@ -90,7 +90,7 @@ app.patch("/editUser/:id", async (req, res) => {
   const updatedUserData = req.body;
 
   const sql =
-    "UPDATE Users SET `user_name` = ?, `first_last_name` = ?, `second_last_name` = ?, `born_date` = ?, `nationality` = ?, `state_of_birth` = ?, `economic_activity` = ?, `curp` = ?, `rfc` = ?, `gender` = ?, `phone_number` = ?, `email` = ?, `country` = ?, `state` = ?, `city` = ?, `neighborhood` = ?, `zip_code` = ?, `street` = ?, `ext_number` = ?, `int_number` = ?, `identification_type` = ?, `identification_number` = ? WHERE `User ID` = ?";
+    "UPDATE users SET user_name = ?, first_last_name = ?, second_last_name = ?, born_date = ?, nationality = ?, state_of_birth = ?, economic_activity = ?, curp = ?, rfc = ?, gender = ?, phone_number = ?, email = ?, country = ?, state = ?, city = ?, neighborhood = ?, zip_code = ?, street = ?, ext_number = ?, int_number = ?, identification_type = ?, identification_number = ? WHERE user_id = ?";
   const values = [
     updatedUserData.user_name,
     updatedUserData["first_last_name"],

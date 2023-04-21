@@ -51,7 +51,7 @@ const ShowInfoModal = ({
   const saveChangesInDB = () => {
     // Save changes in DB (https://kueski-users-db.onrender.com/)
     // Update user in DB with PATCH
-    fetch(`https://kueski-users-db.onrender.com/editUser/${user["User ID"]}`, {
+    fetch(`http://localhost:5000/editUser/${user["user_id"]}`, {
       method: "PATCH",
       headers: {
         accept: "application/json",
@@ -110,10 +110,6 @@ const ShowInfoModal = ({
         street: tempUser["street"],
         ext_number: tempUser["ext_number"],
         int_number: tempUser["int_number"],
-        "Additional Contact Name": tempUser["Additional Contact Name"],
-        "Additional Contact Number": tempUser["Additional Contact Number"],
-        "Additional Contact Salary Range":
-          tempUser["Additional Contact Salary Range"],
         identification_type: tempUser["identification_type"],
         identification_reference: tempUser["identification_reference"],
       }),
@@ -676,28 +672,12 @@ const ShowInfoModal = ({
                                   <p className="text-base">
                                     {key[0].toUpperCase() + key.slice(1)}:
                                   </p>
-                                  {edit ? (
-                                    <input
-                                      type="text"
-                                      className="w-2/4 border-2 border-gray-300 p-2 rounded-lg focus:outline-none focus:border-blue-500"
-                                      value={tempUser["user_data"][key]}
-                                      onChange={(e) => {
-                                        setTempUser({
-                                          ...tempUser,
-                                          user_data: {
-                                            ...tempUser["user_data"],
-                                            [key]: e.target.value,
-                                          },
-                                        });
-                                      }}
-                                    />
-                                  ) : (
-                                    <p className="text-base font-bold">
-                                      {isArray(tempUser["user_data"][key])
-                                        ? tempUser["user_data"][key].join(", ")
-                                        : tempUser["user_data"][key]}
-                                    </p>
-                                  )}
+
+                                  <p className="text-base font-bold">
+                                    {isArray(tempUser["user_data"][key])
+                                      ? tempUser["user_data"][key].join(", ")
+                                      : tempUser["user_data"][key]}
+                                  </p>
                                 </div>
                               </>
                             );
