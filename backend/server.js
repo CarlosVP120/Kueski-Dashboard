@@ -16,10 +16,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // });
 
 const db = mysql.createConnection({
-  host: "sql9.freemysqlhosting.net",
-  user: "sql9612576",
-  password: "NMWcinTmWz",
-  database: "sql9612576",
+  host: "kueski.c2k4scjnbyqp.us-east-2.rds.amazonaws.com",
+  user: "admin",
+  password: "admin123",
+  port: "3306",
+  database: "kueski",
 });
 
 db.connect(function (error) {
