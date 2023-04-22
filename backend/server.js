@@ -63,10 +63,11 @@ app.get("/getUsers", async (req, res) => {
   });
 });
 
-app.get("/api/users/:id", async (req, res) => {
-  let sqlQuery = "SELECT * FROM users WHERE user_id = ?;";
+app.get("/users/:id", async (req, res) => {
+  let sqlQuery =
+    "SELECT * FROM users INNER JOIN addresses ON users.user_id = addresses.user_id INNER JOIN identifications ON users.user_id = identifications.user_id WHERE users.user_id = ?;";
   const userId = req.params.id;
-  connection.query(sqlQuery, userId, (err, row) => {
+  db.query(sqlQuery, userId, (err, row) => {
     if (err) throw err;
     res.send(row[0]);
   });

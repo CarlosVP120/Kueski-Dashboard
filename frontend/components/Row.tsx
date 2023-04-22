@@ -14,13 +14,30 @@ const Row = ({
   const [open, setOpen] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const [edit, setEdit] = useState(false);
+
+  const [user_information, setUserInfo] = useState();
+
+  const query_user_data = async (user_id: string) => {
+    const res = await fetch("http://localhost:5000/users/" + user_id, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await res.json();
+    setUserInfo(result);
+  };
+
   return (
     <>
       <tr
         className="bg-white border-b hover:bg-gray-50"
         onDoubleClick={() => {
-          setShowInfo(true);
-          setOpen(false);
+          query_user_data(user["user_id"]).then(() => {
+            setShowInfo(true);
+            setOpen(false);
+          });
         }}
       >
         <th
@@ -47,13 +64,13 @@ const Row = ({
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
+              strokeWidth="1.5"
               stroke="currentColor"
               className="w-6 h-6"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0l-3.75-3.75M17.25 21L21 17.25"
               />
             </svg>
@@ -69,14 +86,14 @@ const Row = ({
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 className="w-4 h-4 cursor-pointer"
                 onClick={() => setOpen(false)}
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M6 18L18 6M6 6l12 12"
                 />
               </svg>
@@ -124,7 +141,7 @@ const Row = ({
       {showInfo && (
         <ShowInfoModal
           setShowInfo={setShowInfo}
-          user={user}
+          user={user_information}
           edit={edit}
           setEdit={setEdit}
           setUpdate={setUpdate}

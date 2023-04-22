@@ -45,7 +45,7 @@ const DashboardTable = ({
               {data?.map((user: any) => {
                 return (
                   <Row
-                    key={user._id}
+                    key={user.user_id}
                     user={user}
                     setOption={setOption}
                     setUpdate={setUpdate}
