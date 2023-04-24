@@ -18,7 +18,7 @@ const Row = ({
   const [user_information, setUserInfo] = useState();
 
   const query_user_data = async (user_id: string) => {
-    const res = await fetch("http://localhost:5000/users/" + user_id, {
+    const res = await fetch("http://localhost:9000/users/" + user_id, {
       method: "GET",
       headers: {
         accept: "application/json",
@@ -102,7 +102,9 @@ const Row = ({
             <h1
               className="font-bold cursor-pointer py-0.5"
               onClick={() => {
-                setShowInfo(true);
+                query_user_data(user["user_id"]).then(() => {
+                  setShowInfo(true);
+                });
               }}
             >
               Abrir
@@ -116,9 +118,10 @@ const Row = ({
             <h1
               className="font-bold cursor-pointer py-0.5"
               onClick={() => {
-                setShowInfo(true);
-                setEdit(true);
-                // Open in edit mode or open a new modal
+                query_user_data(user["user_id"]).then(() => {
+                  setShowInfo(true);
+                  setEdit(true);
+                });
               }}
             >
               Editar
