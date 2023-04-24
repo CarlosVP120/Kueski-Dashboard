@@ -45,7 +45,7 @@ const RightSide = ({
       ) : option === "Cancelación" ? (
         <Cancelacion />
       ) : option === "Oposición" ? (
-        <Oposicion />
+        <Oposicion data={data} />
       ) : option === "Historial" ? (
         <Historial />
       ) : null}
