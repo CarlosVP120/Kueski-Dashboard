@@ -43,7 +43,7 @@ db.connect(function (error) {
 //   connection.end();
 // }
 
-app.get("/api/users", async (req, res) => {
+app.get("/users", async (req, res) => {
   let sqlQuery = "SELECT user_id, user_name, nationality FROM users;";
   connection.query(sqlQuery, (err, rows) => {
     if (err) throw err;
@@ -51,7 +51,7 @@ app.get("/api/users", async (req, res) => {
   });
 });
 
-app.get("/api/users/:id", async (req, res) => {
+app.get("/users/:id", async (req, res) => {
   let sqlQuery = "SELECT * FROM users WHERE user_id = ?;";
   const userId = req.params.id;
   connection.query(sqlQuery, userId, (err, row) => {
@@ -60,7 +60,7 @@ app.get("/api/users/:id", async (req, res) => {
   });
 });
 
-app.patch("/api/users/:id", async (req, res) => {
+app.patch("/users/:id", async (req, res) => {
   const userId = req.params.id;
   const changes = req.body;
   res.send(changes);
@@ -107,7 +107,7 @@ app.patch("/editUser/:id", async (req, res) => {
   });
 });
 
-app.delete("/api/users/:id", async (req, res) => {
+app.delete("/users/:id", async (req, res) => {
   const userId = req.params.id;
   let sqlQuery =
     "CALL eliminarUsuario(?, @verificacion); SELECT @verificacion;";
