@@ -44,7 +44,8 @@ db.connect(function (error) {
 // }
 
 app.get("/users", async (req, res) => {
-  let sqlQuery = "SELECT user_id, user_name, nationality FROM users;";
+  let sqlQuery =
+    "SELECT user_id, user_name, first_last_name, second_last_name, email, rfc, curp FROM users;";
   connection.query(sqlQuery, (err, rows) => {
     if (err) throw err;
     res.send(rows);
@@ -52,7 +53,7 @@ app.get("/users", async (req, res) => {
 });
 
 app.get("/users/:id", async (req, res) => {
-  let sqlQuery = "SELECT * FROM users WHERE user_id = ?;";
+  let sqlQuery = "CALL getUserInfo(?);";
   const userId = req.params.id;
   connection.query(sqlQuery, userId, (err, row) => {
     if (err) throw err;
@@ -60,61 +61,30 @@ app.get("/users/:id", async (req, res) => {
   });
 });
 
-app.patch("/users/:id", async (req, res) => {
+app.delete("/users/:id", async (req, res) => {
   const userId = req.params.id;
-  const changes = req.body;
-  res.send(changes);
-});
-
-app.patch("/editUser/:id", async (req, res) => {
-  const userId = req.params.id;
-  const updatedUserData = req.body;
-
-  const sql =
-    "UPDATE Users SET `user_name` = ?, `first_last_name` = ?, `second_last_name` = ?, `born_date` = ?, `nationality` = ?, `state_of_birth` = ?, `economic_activity` = ?, `curp` = ?, `rfc` = ?, `gender` = ?, `phone_number` = ?, `email` = ?, `country` = ?, `state` = ?, `city` = ?, `neighborhood` = ?, `zip_code` = ?, `street` = ?, `ext_number` = ?, `int_number` = ?, `identification_type` = ?, `identification_number` = ? WHERE `User ID` = ?";
-  const values = [
-    updatedUserData.user_name,
-    updatedUserData["first_last_name"],
-    updatedUserData["second_last_name"],
-    updatedUserData["born_date"],
-    updatedUserData.nationality,
-    updatedUserData["state_of_birth"],
-    updatedUserData["economic_activity"],
-    updatedUserData.curp,
-    updatedUserData.rfc,
-    updatedUserData.gender,
-    updatedUserData["phone_number"],
-    updatedUserData.email,
-    updatedUserData.country,
-    updatedUserData.state,
-    updatedUserData.city,
-    updatedUserData.neighborhood,
-    updatedUserData["zip_code"],
-    updatedUserData.street,
-    updatedUserData["ext_number"],
-    updatedUserData["int_number"],
-    // updatedUserData["Additional Contact Name"],
-    // updatedUserData["Additional Contact Number"],
-    // updatedUserData["Additional Contact Salary Range"],
-    updatedUserData["identification_type"],
-    updatedUserData["identification_number"],
-    userId,
-  ];
-
-  db.query(sql, values, (err, result) => {
-    if (err) res.send({ message: "Error updating user" });
-    res.send({ message: "User updated successfully" });
+  let sqlQuery = "CALL deleteUser(?, @wasDeleted); SELECT @wasDeleted;";
+  connection.query(sqlQuery, userId, (err, row) => {
+    if (err) throw err;
+    const wasDeleted = row[1][0];
+    res.send(wasDeleted);
   });
 });
 
-app.delete("/users/:id", async (req, res) => {
-  const userId = req.params.id;
+app.post("/logs", async (req, res) => {
+  const userId = req.body.id;
+  const rightType = req.body.rigth_type;
+  const message = req.body.message;
+  const values = [userId, rightType, message];
   let sqlQuery =
-    "CALL eliminarUsuario(?, @verificacion); SELECT @verificacion;";
-  connection.query(sqlQuery, userId, (err, row) => {
+    "INSERT INTO registers (user_id, right_type, register_date) VALUES (?, ?, now());";
+  if (message) {
+    sqlQuery +=
+      "INSERT INTO messages(register_id, message) VALUES (LAST_INSERT_ID, message);";
+  }
+  connection.query(sqlQuery, values, (err) => {
     if (err) throw err;
-    const accVerificacion = row[1][0];
-    res.send(accVerificacion);
+    res.sendStatus(201);
   });
 });
 
