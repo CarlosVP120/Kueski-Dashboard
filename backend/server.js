@@ -46,7 +46,7 @@ db.connect(function (error) {
 app.get("/users", async (req, res) => {
   let sqlQuery =
     "SELECT user_id, user_name, first_last_name, second_last_name, email, rfc, curp FROM users;";
-  connection.query(sqlQuery, (err, rows) => {
+  db.query(sqlQuery, (err, rows) => {
     if (err) throw err;
     res.send(rows);
   });
@@ -61,7 +61,7 @@ app.get("/users/:id", async (req, res) => {
   });
 });
 
-app.delete("/users/:id", async (req, res) => {
+app.put("/users/:id", async (req, res) => {
   const userId = req.params.id;
   let sqlQuery = "CALL deleteUser(?, @wasDeleted); SELECT @wasDeleted;";
   connection.query(sqlQuery, userId, (err, row) => {
