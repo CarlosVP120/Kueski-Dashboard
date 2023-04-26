@@ -51,7 +51,7 @@ const ShowInfoModal = ({
   const saveChangesInDB = () => {
     // Save changes in DB (https://kueski-users-db.onrender.com/)
     // Update user in DB with PATCH
-    fetch(`http://localhost:9000/editUser/${user["user_id"]}`, {
+    fetch(`https://kueski-users-db.onrender.com/editUser/${user["user_id"]}`, {
       method: "PATCH",
       headers: {
         accept: "application/json",

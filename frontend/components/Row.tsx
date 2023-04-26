@@ -18,13 +18,16 @@ const Row = ({
   const [user_information, setUserInfo] = useState();
 
   const query_user_data = async (user_id: string) => {
-    const res = await fetch("http://localhost:9000/users/" + user_id, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await fetch(
+      "https://kueski-users-db.onrender.com/users/" + user_id,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const result = await res.json();
     setUserInfo(result);
   };
