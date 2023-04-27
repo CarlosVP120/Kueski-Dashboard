@@ -16,7 +16,7 @@ const createNewLog = async (req, res) => {
     } = req;
     const newLogValues = [user_id, right_type, message];
     try {
-        const createdLog = logService.createNewLog(newLogValues);
+        const createdLog = await logService.createNewLog(newLogValues);
         res.status(201)
             .send({ status: "OK", data: createdLog });
     } catch (error) {
