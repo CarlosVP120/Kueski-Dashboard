@@ -20,84 +20,6 @@ db.connect((error) => {
     }
 });
 
-// const getAllUsers = () => {
-// try {
-//     return DB.workouts;
-// } catch (error) {
-//     throw { status: 500, message: error };
-// }
-// };
-
-// const getOneUser = (userId) => {
-//     try {
-//         const user = DB.workouts.find((user) => user.id === userId);
-//         if (!user) {
-//             throw {
-//                 status: 400,
-//                 message: `Can't find user with the id '${userId}'`,
-//             };
-//         }
-//         return user;
-//     } catch (error) {
-//         throw { status: error?.status || 500, message: error?.message || error };
-//     }
-// };
-
-// const createNewUser = (newUser) => {
-//     try {
-//         const isAlreadyAdded = DB.workouts.findIndex((user) => user.name === newUser.name) > -1;
-//         if (isAlreadyAdded) {
-//             throw {
-//                 status: 400,
-//                 message: `User with the name ${newUser.name} already exists`,
-//             };
-//         }
-//         DB.workouts.push(newUser);
-//         saveToDatabase(DB);
-//         return newUser;
-//     } catch (error) {
-//         throw { status: 500, message: error?.message || error };
-//     }
-// };
-
-// const updateOneUser = (userId, changes) => {
-//     try {
-//         const indexForUpdate = DB.workouts.findIndex((user) => user.id === userId);
-//         if (indexForUpdate === -1) {
-//             throw {
-//                 status: 400,
-//                 message: `Can't find user with the id '${userId}'`,
-//             };
-//         }
-//         const updatedUser = {
-//             ...DB.workouts[indexForUpdate],
-//             ...changes,
-//             updatedAt: new Date().toLocaleString("en-US", { timeZone: "UTC" })
-//         };
-//         DB.workouts[indexForUpdate] = updatedUser;
-//         saveToDatabase(DB);
-//         return updatedUser;
-//     } catch (error) {
-//         throw { status: error?.status || 500, message: error?.message || error };
-//     }
-// };
-
-// const deleteOneUser = (userId) => {
-//     try {
-//         const indexForDeletion = DB.workouts.findIndex((user) => user.id === userId);
-//         if (indexForDeletion === -1) {
-//             throw {
-//                 status: 400,
-//                 message: `Can't find user with the id '${userId}'`,
-//             };
-//         }
-//         DB.workouts.splice(indexForDeletion, 1);
-//         saveToDatabase(DB);
-//     } catch (error) {
-//         throw { status: error?.status || 500, message: error?.message || error };
-//     }
-// };
-
 const getAllUsers = () => {
     return new Promise((resolve, reject) => {
         let sqlQuery =
@@ -178,4 +100,3 @@ module.exports = {
     updateOneUser,
     deleteOneUser
 };
-
