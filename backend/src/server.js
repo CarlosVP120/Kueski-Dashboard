@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const v1UserRouter = require("./v1/routes/userRoutes");
+const v1LogRouter = require("./v1/routes/logRoutes");
 
 const PORT = process.env.PORT || 3001;
 
@@ -18,23 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // }
 
 app.use("/api/v1/users", v1UserRouter);
-
-app.post("/logs", async (req, res) => {
-  const userId = req.body.id;
-  const rightType = req.body.rigth_type;
-  const message = req.body.message;
-  const values = [userId, rightType, message];
-  let sqlQuery =
-    "INSERT INTO registers (user_id, right_type, register_date) VALUES (?, ?, now());";
-  if (message) {
-    sqlQuery +=
-      "INSERT INTO messages(register_id, message) VALUES (LAST_INSERT_ID, message);";
-  }
-  connection.query(sqlQuery, values, (err) => {
-    if (err) throw err;
-    res.sendStatus(201);
-  });
-});
+app.use("/api/v1/logs", v1LogRouter);
 
 app.listen(PORT, (error) => {
   if (error) {

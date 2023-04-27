@@ -1,7 +1,5 @@
 const cors = require("cors");
 const mysql = require("mysql");
-const DB = require("./db.json");
-const { saveToDatabase } = require("./utils");
 
 const db = mysql.createConnection({
     host: "kueski.c2k4scjnbyqp.us-east-2.rds.amazonaws.com",
@@ -23,7 +21,8 @@ db.connect((error) => {
 const getAllUsers = () => {
     return new Promise((resolve, reject) => {
         let sqlQuery =
-            "SELECT user_id, user_name, first_last_name, second_last_name, email, rfc, curp FROM users;";
+            "SELECT user_id, user_name, first_last_name, second_last_name, email, rfc, curp\
+            FROM users;";
         db.query(sqlQuery, (error, rows) => {
             if (error) reject({ status: 500, message: error });
             resolve(rows);
