@@ -3,7 +3,10 @@ import Row from "./Row";
 import styles from "../styles/Form.module.css";
 
 const OposicionBody = ({}: {}) => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState(true);
+  const [calls, setCalls] = useState(true);
+  const [mails, setMails] = useState(true);
+  const [notifications, setNotifications] = useState(true);
 
   return (
     <>
@@ -37,7 +40,7 @@ const OposicionBody = ({}: {}) => {
               </svg>
             </span>
           </div>
-          {/* On hover show information  */}
+          {/* On hover className="font-normal" show information  */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -65,6 +68,81 @@ const OposicionBody = ({}: {}) => {
               Enter name, email, CURP or RFC
             </h1>
           </div>
+        </div>
+        {/* Columns */}
+        <div className="flex w-full mt-6">
+          <div className="flex flex-col w-1/2 pr-6">
+            <div className="flex justify-between font-bold pb-2 text-gray-600">
+              <h1>Llamadas: </h1>
+              <div className="flex items-center gap-2">
+                <input
+                  checked={calls ? true : false}
+                  type="checkbox"
+                  className="form-checkbox h-6 w-6 rounded-full text-blue-600"
+                  onClick={() => {
+                    setCalls(true);
+                  }}
+                />
+                <h1 className="font-normal">Show</h1>
+                <input
+                  checked={calls ? false : true}
+                  type="checkbox"
+                  className="form-checkbox h-6 w-6 rounded-full text-blue-600 accent-red-500"
+                  onClick={() => {
+                    setCalls(false);
+                  }}
+                />
+                <h1 className="font-normal">Hide</h1>
+              </div>
+            </div>
+            <div className="flex justify-between font-bold pb-2 text-gray-600">
+              <h1>Correos:</h1>
+              <div className="flex items-center gap-2">
+                <input
+                  checked={mails ? true : false}
+                  type="checkbox"
+                  className="form-checkbox h-6 w-6 rounded-full text-blue-600"
+                  onClick={() => {
+                    setMails(true);
+                  }}
+                />
+                <h1 className="font-normal">Show</h1>
+                <input
+                  checked={mails ? false : true}
+                  type="checkbox"
+                  className="form-checkbox h-6 w-6 rounded-full text-blue-600 accent-red-500"
+                  onClick={() => {
+                    setMails(false);
+                  }}
+                />
+                <h1 className="font-normal">Hide</h1>
+              </div>
+            </div>
+            <div className="flex justify-between font-bold pb-2 text-gray-600">
+              <h1>Notificaciones:</h1>
+              <div className="flex items-center gap-2">
+                <input
+                  checked={notifications ? true : false}
+                  type="checkbox"
+                  className="form-checkbox h-6 w-6 rounded-full text-blue-600"
+                  onClick={() => {
+                    setNotifications(true);
+                  }}
+                />
+                <h1 className="font-normal">Show</h1>
+                <input
+                  checked={notifications ? false : true}
+                  type="checkbox"
+                  className="form-checkbox h-6 w-6 rounded-full text-blue-600 accent-red-500"
+                  onClick={() => {
+                    setNotifications(false);
+                  }}
+                />
+                <h1 className="font-normal">Hide</h1>
+              </div>
+            </div>
+          </div>
+          {/* Second column */}
         </div>
       </div>
     </>

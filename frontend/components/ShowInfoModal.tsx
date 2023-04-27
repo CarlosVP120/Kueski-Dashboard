@@ -26,9 +26,12 @@ const ShowInfoModal = ({
 
   // Convert the user_data string to an object and replace the user_data string with the object
 
-  if (typeof user.user_data !== "object") {
+  if (typeof user.user_data !== "object" && user.user_data !== null) {
     const userData = JSON.parse(user.user_data);
     user.user_data = userData;
+    setTempUser(user);
+  } else if (user.user_data === null) {
+    user.user_data = {};
     setTempUser(user);
   }
 
@@ -66,30 +69,6 @@ const ShowInfoModal = ({
           }
           return acc;
         }, {}),
-
-        // user_id: user["user_id"],
-        // user_name: tempUser["user_name"],
-        // first_last_name: tempUser["first_last_name"],
-        // second_last_name: tempUser["second_last_name"],
-        // born_date: tempUser["born_date"],
-        // nationality: tempUser["nationality"],
-        // state_of_birth: tempUser["state_of_birth"],
-        // economic_activity: tempUser["economic_activity"],
-        // curp: tempUser["curp"],
-        // rfc: tempUser["rfc"],
-        // gender: tempUser["gender"],
-        // phone_number: tempUser["phone_number"],
-        // email: tempUser["email"],
-        // country: tempUser["country"],
-        // State: tempUser["State"],
-        // city: tempUser["city"],
-        // neighborhood: tempUser["neighborhood"],
-        // zip_code: tempUser["zip_code"],
-        // street: tempUser["street"],
-        // ext_number: tempUser["ext_number"],
-        // int_number: tempUser["int_number"],
-        // identification_type: tempUser["identification_type"],
-        // identification_reference: tempUser["identification_reference"],
       }),
     })
       .then((res) => res.json())
