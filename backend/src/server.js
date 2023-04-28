@@ -12,12 +12,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// function connectionTemplate(connection, query) {
-//   connection.connect();
-//   query();
-//   connection.end();
-// }
-
 app.use("/api/v1/users", v1UserRouter);
 app.use("/api/v1/logs", v1LogRouter);
 

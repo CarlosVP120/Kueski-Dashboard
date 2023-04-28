@@ -22,30 +22,7 @@ const getOneUser = async (req, res) => {
 };
 
 const createNewUser = (req, res) => {
-    const { body } = req;
-    if (
-        !body.name ||
-        !body.mode ||
-        !body.equipment ||
-        !body.exercises ||
-        !body.trainerTips
-    ) {
-        res.status(400)
-            .send({
-                status: "FAILED",
-                data: {
-                    error: "One of the following keys is missing or is empty in request body: 'name', 'mode', 'equipment', 'exercises', 'trainerTips'",
-                },
-            });
-        return;
-    }
-    const newUser = {
-        name: body.name,
-        mode: body.mode,
-        equipment: body.equipment,
-        exercises: body.exercises,
-        trainerTips: body.trainerTips,
-    };
+    const newUser = req.body;
     try {
         const createdUser = userService.createNewUser(newUser);
         res.status(201).send({ status: "OK", data: createdUser });

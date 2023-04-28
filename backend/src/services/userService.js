@@ -18,16 +18,18 @@ const getOneUser = async (userId) => {
     }
 };
 
-const createNewUser = (newUser) => {
-    const userToInsert = {
-        ...newUser,
-        id: uuid(),
-        createdAt: new Date().toLocaleString("en-US", { timeZone: "UTC" }),
-        updatedAt: new Date().toLocaleString("en-US", { timeZone: "UTC" })
-    };
-    return User.createNewUser(userToInsert)
-        .then((createdUser) => createdUser)
-        .catch((error) => { throw error; })
+const createNewUser = async (newUserJson) => {
+    try {
+        const newUserData = [];
+        const keys = Object.keys(newUserJson);
+        keys.forEach((key) => {
+            newUserData.push(newUserJson[key]);
+        });
+        const createdUser = await User.createNewUser(newUserData);
+        return createdUser;
+    } catch (error) {
+        throw error;
+    }
 };
 
 const updateOneUser = async (userId, changes) => {
