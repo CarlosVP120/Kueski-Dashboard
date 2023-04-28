@@ -25,7 +25,6 @@ const ShowInfoModal = ({
   const [tempUser, setTempUser] = useState(user);
 
   // Convert the user_data string to an object and replace the user_data string with the object
-
   if (typeof user.user_data !== "object" && user.user_data !== null) {
     const userData = JSON.parse(user.user_data);
     user.user_data = userData;
@@ -54,7 +53,7 @@ const ShowInfoModal = ({
   const saveChangesInDB = () => {
     // Save changes in DB (https://kueski-users-db.onrender.com/)
     // Update user in DB with PATCH
-    fetch(`https://kueski-users-db.onrender.com/editUser/${user["user_id"]}`, {
+    fetch(`http://localhost:3001/api/v1/users/${user.user_id}`, {
       method: "PATCH",
       headers: {
         accept: "application/json",
@@ -71,13 +70,15 @@ const ShowInfoModal = ({
         }, {}),
       }),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        alert(data.message);
-      });
+      .then((res) => {
+        if (res.status === 204) {
+          alert("User updated successfully");
+          setUpdate(true);
+        }
+      })
+      .catch((err) => console.log(err));
     // Update user in state
     setEdit(false);
-    setUpdate(true);
   };
 
   return (
@@ -176,6 +177,7 @@ const ShowInfoModal = ({
                       onClick={() => {
                         setShowInfo(false);
                         setEdit(false);
+                        setUpdate(true);
                       }}
                       className="text-gray-400 hover:text-red-500"
                     >
@@ -621,10 +623,11 @@ const ShowInfoModal = ({
                           </p>
                           <div className="w-4/5 h-[3px] bg-gray-500"></div>
                         </div>
+
                         {Object.keys(tempUser["user_data"]).map(
                           (key, value) => {
                             return (
-                              <>
+                              <div key={key}>
                                 <div className="mb-3">
                                   <p className="text-base">
                                     {key[0].toUpperCase() + key.slice(1)}:
@@ -636,7 +639,7 @@ const ShowInfoModal = ({
                                       : tempUser["user_data"][key]}
                                   </p>
                                 </div>
-                              </>
+                              </div>
                             );
                           }
                         )}
@@ -701,6 +704,7 @@ const ShowInfoModal = ({
               onClick={() => {
                 setShowInfo(false);
                 setEdit(false);
+                setUpdate(true);
               }}
               className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
             >

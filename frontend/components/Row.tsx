@@ -18,16 +18,13 @@ const Row = ({
   const [user_information, setUserInfo] = useState();
 
   const query_user_data = async (user_id: string) => {
-    const res = await fetch(
-      "https://kueski-users-db.onrender.com/users/" + user_id,
-      {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const res = await fetch("http://localhost:3001/api/v1/users/" + user_id, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
     const result = await res.json();
     setUserInfo(result);
   };
@@ -145,13 +142,18 @@ const Row = ({
         </td>
       </tr>
       {showInfo && (
-        <ShowInfoModal
-          setShowInfo={setShowInfo}
-          user={user_information}
-          edit={edit}
-          setEdit={setEdit}
-          setUpdate={setUpdate}
-        />
+        <tr>
+          <td>
+            <ShowInfoModal
+              key={user["user_id"]}
+              setShowInfo={setShowInfo}
+              user={(user_information as any)[0]}
+              edit={edit}
+              setEdit={setEdit}
+              setUpdate={setUpdate}
+            />
+          </td>
+        </tr>
       )}
     </>
   );

@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "@react-pdf/renderer": "^3.1.9",
     "@types/node": "18.15.10",

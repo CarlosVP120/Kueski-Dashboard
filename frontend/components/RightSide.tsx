@@ -20,14 +20,17 @@ const RightSide = ({
 
   useEffect(() => {
     if (update) {
-      (async () => await Load())();
+      // Wait 2 seconds before updating the data
+      setTimeout(async () => {
+        await Load();
+      }, 2000);
       setUpdate(false);
     }
   }, [update]);
 
   async function Load() {
     // const res = await fetch("https://kueski-users-db.onrender.com/getUsers", {
-    const res = await fetch("https://kueski-users-db.onrender.com/getUsers", {
+    const res = await fetch("http://localhost:3001/api/v1/users", {
       method: "GET",
       headers: {
         accept: "application/json",
@@ -35,7 +38,8 @@ const RightSide = ({
       },
     });
     const result = await res.json();
-    setData(result.data);
+    // console.log("loaded data", result);
+    setData(result);
   }
 
   return (
