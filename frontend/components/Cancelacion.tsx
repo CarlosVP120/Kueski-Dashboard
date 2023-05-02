@@ -28,7 +28,7 @@ const Cancelacion = () => {
           Bienvenid@ <span className="text-blue-600">{name}</span>
         </h1>
         <h2 className="text-2xl font-bold">Cancelación</h2>
-        <div className="w-full flex flex-col pt-4 ">
+        <div className="w-full flex flex-col pt-4">
           <h1 className="font-bold pb-2 text-gray-600">
             Selecciona un usuario:
           </h1>
@@ -90,7 +90,7 @@ const Cancelacion = () => {
         </div>
 
         <div>
-          <p className="text-gray-600 text-sm w-9/12">
+          <p className="text-gray-600 text-sm w-9/12 mt-6">
             Por medio del presente y atendiendo a los derechos ARCO con los que
             cuenta el usuario "NombreUsuario" está solicitando la cancelación en
             el uso de su personal datos.
@@ -103,7 +103,7 @@ const Cancelacion = () => {
 
         <div className="w-full flex flex-col pt-4">
           <textarea
-            className="w-full h-96 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-gray-100 resize-none"
+            className="w-9/12 h-48 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-gray-100 resize-none"
             placeholder="Escribe aquí..."
             value={cancelacion}
             onChange={(e) => {
