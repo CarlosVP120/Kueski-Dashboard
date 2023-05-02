@@ -17,8 +17,6 @@ const Cancelacion = () => {
 
   const handleSubmit = () => {
     setCancelacion(cancelacion);
-
-    console.log(cancelacion);
   };
 
   return (
