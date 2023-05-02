@@ -10,12 +10,22 @@ const db = mysql.createPool({
     multipleStatements: true,
 });
 
-// db.connect((error) => {
-//     if (error) {
-//         console.log("Error Connecting to DB");
-//     } else {
-//         console.log("Successfully Connected to DB");
-//     }
-// });
+const executeQuery = (query, callback) => {
+    db.getConnection((error, connection) => {
+        if (error) return callback(error);
+        connection.query(query, (error, rows) => {
+            if (error) return callback(error);
+            connection.release();
+            callback(null, rows);
+        });
+        connection.on("error", (error) => {
+            throw error;
+        })
+    });
+};
 
-module.exports = db;
+
+module.exports = {
+    db,
+    executeQuery   
+};

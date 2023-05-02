@@ -7,7 +7,7 @@ const getAllLogs = () => {
             FROM registers r\
             INNER JOIN messages m\
             USING(register_id);";
-        db.query(sqlQuery, (error, rows) => {
+        db.executeQuery(sqlQuery, (error, rows) => {
             if (error) reject({ status: 500, message: error });
             resolve(rows);
         });
@@ -22,7 +22,7 @@ const createNewLog = (valuesLog) => {
             sqlQuery +=
                 "INSERT INTO messages(register_id, message) VALUES (LAST_INSERT_ID(), ?);";
         }
-        db.query(sqlQuery, valuesLog, (error, rows) => {
+        db.executeQuery(sqlQuery, valuesLog, (error, rows) => {
             if (error) reject({ status: 500, message: error });
             resolve(rows);
         });
