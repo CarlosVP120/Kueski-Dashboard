@@ -92,8 +92,8 @@ const Cancelacion = () => {
         <div>
           <p className="text-gray-600 text-sm w-9/12">
             Por medio del presente y atendiendo a los derechos ARCO con los que
-            cuenta el usuario "NombreUsuario" está solicitando la cancelación en
-            el uso de su personal datos.
+            cuenta el usuario &quot;NombreUsuario&quot; está solicitando la
+            cancelación en el uso de su personal datos.
           </p>
 
           <p className="text-gray-600 text-sm mt-2 font-bold">
