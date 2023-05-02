@@ -21,7 +21,7 @@ const Dashboard = () => {
     <>
       <Head>
         <title>Dashboard</title>
-        <link rel="icon" href="/vercel.svg" />
+        <link rel="icon" href="./kueskilogo.png" />
         <meta
           http-equiv="Content-Security-Policy"
           content="upgrade-insecure-requests"
