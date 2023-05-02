@@ -4,10 +4,30 @@ import styles from "../styles/Form.module.css";
 
 const OposicionBody = ({}: {}) => {
   const [isHovered, setIsHovered] = useState(true);
-  const [calls, setCalls] = useState(true);
-  const [mails, setMails] = useState(true);
-  const [notifications, setNotifications] = useState(true);
+  const [search, setSearch] = useState("");
+  const [data, setData] = useState({});
   const [typeOfOpposition, setTypeOfOpposition] = useState("Primarios");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [currentUser, setCurrentUser] = useState();
+
+  async function Load() {
+    // const res = await fetch("https://kueski-users-db.onrender.com/getUsers", {
+    const res = await fetch("http://localhost:3001/api/v1/users", {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await res.json();
+    // console.log("loaded data", result);
+    setData(result);
+  }
+
+  useEffect(() => {
+    (async () => await Load())();
+  }, []);
+
   const [primarios, setPrimarios] = useState({
     id_solicitante: true,
     integracion_expediente: true,
@@ -23,7 +43,7 @@ const OposicionBody = ({}: {}) => {
     seguridad_informacion: true,
     proteccion_robo_identidad: true,
   });
-  const [primariosTitles, setPrimariosTitles] = useState({
+  const primariosTitles = useState({
     id_solicitante:
       "Identificación del solicitante y/o cliente, según sea el caso.",
     integracion_expediente:
@@ -58,7 +78,7 @@ const OposicionBody = ({}: {}) => {
     encuestas: true,
   });
 
-  const [secundariosTitles, setSecundariosTitles] = useState({
+  const secundariosTitles = useState({
     mercadotecnia:
       "Fines mercadotécnicos, publicitarios y/o de prospección comercial.",
     reconocimientos:
@@ -78,10 +98,11 @@ const OposicionBody = ({}: {}) => {
             <input
               placeholder="Search"
               className={styles.input_text}
-              // value={search}
-              // onChange={(e) => {
-              //   setSearch(e.target.value);
-              // }}
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+              onFocus={() => setShowSuggestions(true)}
             />
             <span className="icon flex items-center px-4">
               <svg
@@ -100,7 +121,6 @@ const OposicionBody = ({}: {}) => {
               </svg>
             </span>
           </div>
-          {/* On hover className="font-normal" show information  */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -129,6 +149,73 @@ const OposicionBody = ({}: {}) => {
             </h1>
           </div>
         </div>
+
+        {/* Suggestions */}
+        <div className="flex flex-col mt-1 absolute bg-slate-100 rounded-md w-1/3 ">
+          {showSuggestions &&
+            Object.keys(data)
+              .filter((key) => {
+                let completeName = `${(data as any)[key]["user_name"]} ${
+                  (data as any)[key]["first_last_name"]
+                } ${(data as any)[key]["second_last_name"]}`;
+
+                return (
+                  // The value cant contain null or undefined
+                  (data as any)[key]["user_name"]
+                    ?.toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  (data as any)[key]["email"]
+                    ?.toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  (data as any)[key]["curp"]
+                    ?.toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  (data as any)[key]["rfc"]
+                    ?.toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  // If the complete name includes the search excluding spaces and empty strings
+                  completeName
+                    .split(" ")
+                    .filter((val) => val !== "")
+                    .join(" ")
+                    .toLowerCase()
+                    .includes(search.toLowerCase())
+                );
+              })
+              .map((val, key) => {
+                return (
+                  <>
+                    {search.length > 0 && (
+                      <button
+                        className="flex items-center justify-between rounded-xl px-4 py-2 mx-2 mt-2 cursor-pointer hover:bg-slate-200"
+                        key={key}
+                        onClick={() => {
+                          setCurrentUser((data as any)[val]);
+                          setSearch("");
+                          setShowSuggestions(false);
+                        }}
+                      >
+                        <h1>
+                          {(data as any)[val]["user_name"]}{" "}
+                          {(data as any)[val]["first_last_name"]}{" "}
+                          {(data as any)[val]["second_last_name"]}{" "}
+                        </h1>
+                      </button>
+                    )}
+                  </>
+                );
+              })}
+        </div>
+
+        {/* Selected User */}
+        {currentUser && (
+          <h1 className="font-bold text-2xl pb-2 text-blue-600 mt-4">
+            {(currentUser as any).user_name}{" "}
+            {(currentUser as any).first_last_name}{" "}
+            {(currentUser as any).second_last_name}
+          </h1>
+        )}
+
         {/* Dropwon select */}
         <div className="flex items-center gap-2 mt-6 ">
           <div className="flex items-center gap-2">
@@ -152,16 +239,16 @@ const OposicionBody = ({}: {}) => {
             {typeOfOpposition === "Primarios"
               ? Object.keys(primarios).map((key) => {
                   return (
-                    <div className="flex justify-between font-bold pb-2 text-gray-600">
-                      <h1 className=" flex max-w-3xl">
-                        {(primariosTitles as any)[key]}
+                    <div className="flex justify-between font-bold pb-2 text-gray-600 ">
+                      <h1 className="text-black flex max-w-3xl">
+                        {(primariosTitles as any)[0][key]}
                       </h1>
                       <div className="flex items-center gap-2">
                         <input
                           checked={(primarios as any)[key] ? true : false}
                           type="checkbox"
                           className="form-checkbox h-6 w-6 rounded-full text-blue-600"
-                          onClick={() => {
+                          onChange={() => {
                             setPrimarios({
                               ...primarios,
                               [key]: true,
@@ -173,7 +260,7 @@ const OposicionBody = ({}: {}) => {
                           checked={(primarios as any)[key] ? false : true}
                           type="checkbox"
                           className="form-checkbox h-6 w-6 rounded-full text-blue-600 accent-red-500"
-                          onClick={() => {
+                          onChange={() => {
                             setPrimarios({
                               ...primarios,
                               [key]: false,
@@ -189,14 +276,14 @@ const OposicionBody = ({}: {}) => {
                   return (
                     <div className="flex justify-between font-bold pb-2 text-gray-600">
                       <h1 className=" flex max-w-3xl">
-                        {(secundariosTitles as any)[key]}
+                        {(secundariosTitles as any)[0][key]}
                       </h1>
                       <div className="flex items-center gap-2">
                         <input
                           checked={(secundarios as any)[key] ? true : false}
                           type="checkbox"
                           className="form-checkbox h-6 w-6 rounded-full text-blue-600"
-                          onClick={() => {
+                          onChange={() => {
                             setSecundarios({
                               ...secundarios,
                               [key]: true,
@@ -208,7 +295,7 @@ const OposicionBody = ({}: {}) => {
                           checked={(secundarios as any)[key] ? false : true}
                           type="checkbox"
                           className="form-checkbox h-6 w-6 rounded-full text-blue-600 accent-red-500"
-                          onClick={() => {
+                          onChange={() => {
                             setSecundarios({
                               ...secundarios,
                               [key]: false,
