@@ -239,7 +239,10 @@ const OposicionBody = ({}: {}) => {
             {typeOfOpposition === "Primarios"
               ? Object.keys(primarios).map((key) => {
                   return (
-                    <div className="flex justify-between font-bold pb-2 text-gray-600 ">
+                    <div
+                      className="flex justify-between font-bold pb-2 text-gray-600 "
+                      key={key}
+                    >
                       <h1 className="text-black flex max-w-3xl">
                         {(primariosTitles as any)[0][key]}
                       </h1>
@@ -274,7 +277,10 @@ const OposicionBody = ({}: {}) => {
                 })
               : Object.keys(secundarios).map((key) => {
                   return (
-                    <div className="flex justify-between font-bold pb-2 text-gray-600">
+                    <div
+                      className="flex justify-between font-bold pb-2 text-gray-600"
+                      key={key}
+                    >
                       <h1 className=" flex max-w-3xl">
                         {(secundariosTitles as any)[0][key]}
                       </h1>
