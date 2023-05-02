@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { auth } from "../firebase/firebaseClient";
 import styles from "../styles/Form.module.css";
 
 const Cancelacion = () => {
-  const [search, setSearch] = React.useState("");
-  const [isHovered, setIsHovered] = React.useState(false);
+  const [search, setSearch] = useState("");
+  const [isHovered, setIsHovered] = useState(false);
+  const [cancelacion, setCancelacion] = useState("");
 
   const name = auth.currentUser?.email
     ?.split("@")[0]
@@ -13,6 +14,12 @@ const Cancelacion = () => {
       return word[0].toUpperCase() + word.slice(1);
     })
     .join(" ");
+
+  const handleSubmit = () => {
+    setCancelacion(cancelacion);
+
+    console.log(cancelacion);
+  };
 
   return (
     <>
@@ -98,7 +105,18 @@ const Cancelacion = () => {
           <textarea
             className="w-full h-96 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-gray-100 resize-none"
             placeholder="Escribe aquí..."
+            value={cancelacion}
+            onChange={(e) => {
+              setCancelacion(e.target.value);
+            }}
           ></textarea>
+
+          <button
+            className="w-1/4 bg-blue-600 text-white font-bold py-2 px-4 rounded-md mt-4"
+            onClick={() => handleSubmit()}
+          >
+            Enviar
+          </button>
         </div>
       </div>
     </>
