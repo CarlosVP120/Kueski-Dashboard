@@ -110,7 +110,6 @@ const OposicionBody = ({}: {}) => {
           showSuggestions={showSuggestions}
           currentUser={currentUser}
         />
-        {/* Selected User */}
 
         {/* Dropwon select */}
         <div className="flex items-center gap-2 mt-6 ">
