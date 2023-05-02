@@ -37,6 +37,7 @@ const getAllUsers = () => {
             FROM users;";
         db.query(sqlQuery, (error, rows) => {
             if (error) reject({ status: 500, message: error });
+
             resolve(rows);
         });
     });
@@ -47,6 +48,7 @@ const getOneUser = (userId) => {
         let sqlQuery = "CALL getUserInfo(?);";
         db.query(sqlQuery, userId, (error, row) => {
             if (error) reject({ status: 500, message: error });
+            if (row.length == 0) reject({ status: 404, message: "Cartoon Not Found"});
             resolve(row[0]);
         });
     });
@@ -63,9 +65,9 @@ const createNewUser = (newUser) => {
         }
         sqlQuery = sqlQuery.slice(0, -2);
         sqlQuery += "); SELECT * FROM users WHEN user_id = LAST_INSERT_ID();";
-        db.query(sqlQuery, newUser, (error, row) => {
+        db.query(sqlQuery, newUser, (error, result) => {
             if (error) reject({ status: 500, message: error });
-            resolve(row);
+            resolve(result);
         });
     });
 };
@@ -86,7 +88,7 @@ const updateOneUser = (userId, columns, values) => {
                 updatedTables.add(table["name"]);
             }
         }
-        console.log(updatedTables);
+        //console.log(updatedTables);
         for (const table of updatedTables) {
             sqlQuery += `${table}.updated_at = now(), `;
         }
@@ -95,6 +97,7 @@ const updateOneUser = (userId, columns, values) => {
         values.push(userId);
         db.query(sqlQuery, values, (error, result) => {
             if (error) reject({ status: 500, message: error });
+            if (!result["affectedRows"]) reject({ status: 404, message: "User Not Found"});
             resolve();
         });
     });
@@ -103,9 +106,10 @@ const updateOneUser = (userId, columns, values) => {
 const deleteOneUser = (userId) => {
     return new Promise((resolve, reject) => {
         let sqlQuery = "CALL deleteUser(?, @wasDeleted); SELECT @wasDeleted;";
-        db.query(sqlQuery, userId, (error, row) => {
+        db.query(sqlQuery, userId, (error, result) => {
             if (error) reject({ status: 500, message: error });
-            const wasDeleted = row[1][0];
+            if (!result["affectedRows"]) reject({ status: 404, message: "User Not Found"});
+            const wasDeleted = result[1][0];
             resolve(wasDeleted);
         });
     });
