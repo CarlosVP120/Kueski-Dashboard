@@ -13,15 +13,21 @@ const getColumnNames = (table) => {
 };
 
 const getTableColumns = async () => {
-    const usersColumns = await getColumnNames("users");
-    const addressesColumns = await getColumnNames("addresses");
-    const identificationsColumns = await getColumnNames("identifications");
-    const tables = [
-        { table: "users", columns: usersColumns },
-        { table: "addresses", columns: addressesColumns },
-        { table: "identifications", columns: identificationsColumns },
-    ];
+    let tableNames = ["users", "addresses", "identifications"];
+    let tables = await Promise.all(tableNames.map(async (tableName) => {
+        const columnNames = await getColumnNames(tableName);
+        return { name: tableName, columns: columnNames };
+    }));
     return tables;
+};
+
+const getTables = async () => {
+    try {
+        const tablesColumns = await getTableColumns();
+        return tablesColumns;
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 const getAllUsers = () => {
@@ -64,24 +70,23 @@ const createNewUser = (newUser) => {
     });
 };
 
-const updateOneUser = (userId, changes) => {
+const updateOneUser = (userId, columns, values) => {
     return new Promise(async (resolve, reject) => {
-        const usersColumns = await getColumnNames("users");
-        const addressesColumns = await getColumnNames("addresses");
-        const identificationsColumns = await getColumnNames("identifications");
-        //const tables = getTableColumns();
+        const tables = await getTables();
         let sqlQuery =
             "UPDATE users INNER JOIN addresses USING(user_id)\
         INNER JOIN identifications USING(user_id) SET ";
-        let values = [];
         let updatedTables = new Set();
-        for (const key in changes) {
-            if (usersColumns.includes(key)) updatedTables.add("users");
-            if (addressesColumns.includes(key)) updatedTables.add("addresses");
-            if (identificationsColumns.includes(key)) updatedTables.add("identifications");
-            sqlQuery += `${key} = ?, `;
-            values.push(changes[key]);
-        };
+        sqlQuery += columns;
+        for (const table of tables) {
+            const isInTheTable = table["columns"].some((column) => {
+                return columns.includes(column);
+            });
+            if (isInTheTable) {
+                updatedTables.add(table["name"]);
+            }
+        }
+        console.log(updatedTables);
         for (const table of updatedTables) {
             sqlQuery += `${table}.updated_at = now(), `;
         }

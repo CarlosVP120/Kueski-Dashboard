@@ -1,11 +1,12 @@
 const mysql = require("mysql");
 
 const db = mysql.createPool({
-    host: "kueski.c2k4scjnbyqp.us-east-2.rds.amazonaws.com",
-    user: "admin",
-    password: "admin123",
-    port: "3306",
-    database: "kueski",
+    connectionLimit: 10,
+    host: process.env.DB_HOST || "kueski.c2k4scjnbyqp.us-east-2.rds.amazonaws.com",
+    user: process.env.DB_USER || "admin",
+    password: process.env.DB_PASSWORD || "admin123",
+    port: process.env.DB_PORT || "3306",
+    database: process.env.DB || "kueski",
     multipleStatements: true,
 });
 

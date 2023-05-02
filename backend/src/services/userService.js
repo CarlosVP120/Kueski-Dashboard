@@ -34,7 +34,13 @@ const createNewUser = async (newUserJson) => {
 
 const updateOneUser = async (userId, changes) => {
     try {
-        await User.updateOneUser(userId, changes);
+        let columns = "";
+        let values = [];
+        for (const key in changes) {
+            columns += `${key} = ?, `;
+            values.push(changes[key]);
+        };
+        await User.updateOneUser(userId, columns, values);
     } catch (error) {
         throw error;
     }
