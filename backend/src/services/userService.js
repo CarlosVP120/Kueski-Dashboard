@@ -25,8 +25,7 @@ const createNewUser = async (newUserJson) => {
         keys.forEach((key) => {
             newUserData.push(newUserJson[key]);
         });
-        const createdUser = await User.createNewUser(newUserData);
-        return createdUser;
+        await User.createNewUser(newUserData);
     } catch (error) {
         throw error;
     }
@@ -34,7 +33,23 @@ const createNewUser = async (newUserJson) => {
 
 const updateOneUser = async (userId, changes) => {
     try {
-        await User.updateOneUser(userId, changes);
+        let columns = "";
+        let values = [];
+        for (const key in changes) {
+            columns += `${key} = ?, `;
+            values.push(changes[key]);
+        };
+        await User.updateOneUser(userId, columns, values);
+    } catch (error) {
+        throw error;
+    }
+};
+
+const updateOpositionRules = async (userId, changes) => {
+    try {
+        changes = JSON.stringify(changes);
+        const values = [changes, userId];
+        await User.updateOpositionRules(values);
     } catch (error) {
         throw error;
     }
@@ -54,5 +69,6 @@ module.exports = {
     getOneUser,
     createNewUser,
     updateOneUser,
+    updateOpositionRules,
     deleteOneUser,
 };
