@@ -17,19 +17,17 @@ const OposicionBody = ({}: {}) => {
   const handleSubmit = () => {
     // Update the opposition_rules field of the user
     fetch(
-      `https://kueski-users-db.onrender.com/api/v1/users/${
+      `http://localhost:3001/api/v1/users/${
         (currentUser as any)["user_id"]
-      }`,
+      }/oposition`,
       {
-        method: "PATCH",
+        method: "PUT",
         headers: {
           accept: "application/json",
           "Content-Type": "application/json",
         },
         // the api recieves the json object and a boolean value to know if the passed object is for a JSON value in sql
-        body: JSON.stringify({
-          oposition_rules: (tempUser as any)["oposition_rules"],
-        }),
+        body: JSON.stringify((tempUser as any)["oposition_rules"]),
       }
     )
       .then((res) => {
