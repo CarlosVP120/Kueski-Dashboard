@@ -53,7 +53,7 @@ const ShowInfoModal = ({
   const saveChangesInDB = () => {
     // Save changes in DB (https://kueski-users-db.onrender.com/)
     // Update user in DB with PATCH
-    fetch(`http://localhost:3001/api/v1/users/${user.user_id}`, {
+    fetch(`https://kueski-users-db.onrender.com/api/v1/users/${user.user_id}`, {
       method: "PATCH",
       headers: {
         accept: "application/json",
@@ -79,7 +79,7 @@ const ShowInfoModal = ({
       .catch((err) => console.log(err));
     // Update user in state
     setEdit(false);
-    fetch("http://localhost:3001/api/v1/logs/", {
+    fetch("https://kueski-users-db.onrender.com/api/v1/logs/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

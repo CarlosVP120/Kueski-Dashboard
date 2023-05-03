@@ -28,13 +28,16 @@ const Searchbar = ({
 }) => {
   async function getUser(id: any) {
     // const res = await fetch("https://kueski-users-db.onrender.com/getUser", {
-    const res = await fetch("http://localhost:3001/api/v1/users/" + id, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await fetch(
+      "https://kueski-users-db.onrender.com/api/v1/users/" + id,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const result = await res.json();
 
     if (
