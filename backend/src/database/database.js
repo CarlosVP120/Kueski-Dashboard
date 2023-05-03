@@ -10,7 +10,7 @@ const db = mysql.createPool({
     multipleStatements: true,
 });
 
-const executeQuery = (query, callback) => {
+executeQuery = (query, callback) => {
     db.getConnection((error, connection) => {
         if (error) return callback(error);
         connection.query(query, (error, rows) => {
@@ -24,8 +24,22 @@ const executeQuery = (query, callback) => {
     });
 };
 
+executeQuery = (query, values, callback) => {
+    db.getConnection((error, connection) => {
+        if (error) return callback(error);
+        connection.query(query, values, (error, rows) => {
+            if (error) return callback(error);
+            connection.release();
+            callback(null, rows);
+        });
+        connection.on("error", (error) => {
+            throw error;
+        })
+    });
+};
+
 
 module.exports = {
     db,
-    executeQuery   
+    executeQuery
 };

@@ -25,8 +25,7 @@ const createNewUser = async (newUserJson) => {
         keys.forEach((key) => {
             newUserData.push(newUserJson[key]);
         });
-        const createdUser = await User.createNewUser(newUserData);
-        return createdUser;
+        await User.createNewUser(newUserData);
     } catch (error) {
         throw error;
     }
