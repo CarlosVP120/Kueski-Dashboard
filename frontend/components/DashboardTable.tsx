@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Row from "./Row";
+import { PieChart } from "react-minimal-pie-chart";
 
 const DashboardTable = ({
   data,
@@ -10,10 +11,68 @@ const DashboardTable = ({
   setOption: (option: string) => void;
   setUpdate: (update: boolean) => void;
 }) => {
+  const defaultLabelStyle = {
+    fontSize: "8px",
+    fontFamily: "sans-serif",
+    // color of the text gray-100
+    fill: "#ffffff",
+    fontWeight: "bold",
+  };
+
+  const [cancelaciones, setCancelaciones] = useState(0);
+  const [clientes, setClientes] = useState(0);
+  const [oposiciones, setOposiciones] = useState(0);
+
+  useEffect(() => {
+    // Get the total of cancelations
+    const clientes_total = data?.filter((user: any) => {
+      return user["is_client"] == 1;
+    });
+
+    setClientes(clientes_total.length);
+  });
+
   return (
     <>
       {data ? (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-6">
+          {/* Metrics div */}
+          <div className="w-full bg-slate-100 flex mb-3 gap-1 animate-appear">
+            {/* Column 1 */}
+            <div className="flex flex-col justify-center items-center p-4 w-full">
+              <h1 className="text-base mb-1 font-bold text-gray-700">
+                Total de usuarios
+              </h1>
+              <PieChart
+                data={[
+                  // Blue colors
+                  { title: "Clientes", value: clientes, color: "#2B6CB0" },
+                  { title: "", value: 15, color: "#A0AEC0" },
+                ]}
+                label={({ dataEntry }) =>
+                  Math.round(dataEntry.percentage) + "%" + " " + dataEntry.title
+                }
+                labelStyle={defaultLabelStyle}
+                style={{ height: "150px" }}
+                reveal={100}
+              />
+            </div>
+            {/* Column 2 */}
+            <div className="flex flex-col justify-center items-center py-4 w-full">
+              <h1 className="text-lg font-bold text-gray-700">
+                Cancelaciones realizadas
+              </h1>
+              <h1 className="text-6xl font-bold text-gray-700">10</h1>
+            </div>
+            {/* Column 3 */}
+            <div className="flex flex-col justify-center items-center py-4 w-full">
+              <h1 className="text-lg font-bold text-gray-700">
+                Oposiciones realizadas
+              </h1>
+              <h1 className="text-6xl font-bold text-gray-700">10</h1>
+            </div>
+          </div>
+
           <table className="w-full text-sm text-left text-gray-500 ">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 sticky top-0">
               <tr>

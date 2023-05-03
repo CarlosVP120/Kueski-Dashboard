@@ -56,7 +56,7 @@ const Searchbar = ({
 
   return (
     <>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 overflow-hidden">
         <div className={`${styles.input_group} self-center !max-w-[380px]`}>
           <input
             placeholder="Search"
@@ -110,7 +110,7 @@ const Searchbar = ({
           </h1>
         </div>
       </div>
-      <div className="flex flex-col mt-1 fixed bg-slate-100 rounded-md w-1/3 ">
+      <div className="flex flex-col max-h-96 mt-1 fixed bg-slate-100 rounded-md w-1/4 overflow-y-auto">
         {showSuggestions &&
           Object.keys(data)
             .filter((key) => {
