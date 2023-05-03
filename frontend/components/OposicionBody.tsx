@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Row from "./Row";
 import styles from "../styles/Form.module.css";
 import Searchbar from "./Searchbar";
+import Swal from "sweetalert2";
 
 const OposicionBody = ({}: {}) => {
   const [isHovered, setIsHovered] = useState(true);
@@ -33,7 +34,7 @@ const OposicionBody = ({}: {}) => {
     )
       .then((res) => {
         if (res.status === 204) {
-          alert("Oposición registrada");
+          Swal.fire("Completado!", "Oposición registrada", "success");
         }
       })
       .catch((error) => {

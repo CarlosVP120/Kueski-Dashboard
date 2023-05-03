@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import PDFView from "./PDF";
-import { type } from "os";
+import Swal from "sweetalert2";
 import { isArray } from "util";
 
 const ShowInfoModal = ({
@@ -72,7 +72,11 @@ const ShowInfoModal = ({
     })
       .then((res) => {
         if (res.status === 204) {
-          alert("User updated successfully");
+          Swal.fire(
+            "Completado!",
+            "Usuario actualizado correctamente",
+            "success"
+          );
           setUpdate(true);
         }
       })

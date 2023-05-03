@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Row from "./Row";
-import styles from "../styles/Form.module.css";
 import Searchbar from "./Searchbar";
+import Swal from "sweetalert2";
 
 const OposicionBody = ({}: {}) => {
   const [isHovered, setIsHovered] = useState(true);
@@ -45,7 +44,7 @@ const OposicionBody = ({}: {}) => {
       }
     )
       .then((res) => {
-        alert("Cancelación registrada");
+        Swal.fire("Completado!", "Cancelación registrada", "success");
       })
       .catch((error) => {
         console.error("Error:", error);
