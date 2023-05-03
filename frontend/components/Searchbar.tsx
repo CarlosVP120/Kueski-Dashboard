@@ -11,6 +11,8 @@ const Searchbar = ({
   data,
   setCurrentUser,
   currentUser,
+  tempUser,
+  setTempUser,
 }: {
   search: string;
   setSearch: (search: string) => void;
@@ -21,7 +23,34 @@ const Searchbar = ({
   data: any;
   setCurrentUser: (currentUser: any) => void;
   currentUser: any;
+  tempUser: any;
+  setTempUser: (tempUser: any) => void;
 }) => {
+  async function getUser(id: any) {
+    // const res = await fetch("https://kueski-users-db.onrender.com/getUser", {
+    const res = await fetch("http://localhost:3001/api/v1/users/" + id, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await res.json();
+
+    if (
+      typeof result[0]["oposition_rules"] !== "object" &&
+      result[0]["oposition_rules"] !== null
+    ) {
+      const userData = JSON.parse(result[0]["oposition_rules"]);
+      result[0]["oposition_rules"] = userData;
+    } else if (result[0]["oposition_rules"] === null) {
+      result[0]["oposition_rules"] = {};
+    }
+
+    setCurrentUser(result[0]);
+    setTempUser(result[0]);
+  }
+
   return (
     <>
       <div className="flex items-center gap-2">
@@ -78,7 +107,7 @@ const Searchbar = ({
           </h1>
         </div>
       </div>
-      <div className="flex flex-col mt-1 absolute bg-slate-100 rounded-md w-1/3 ">
+      <div className="flex flex-col mt-1 fixed bg-slate-100 rounded-md w-1/3 ">
         {showSuggestions &&
           Object.keys(data)
             .filter((key) => {
@@ -118,6 +147,7 @@ const Searchbar = ({
                       key={key}
                       onClick={() => {
                         setCurrentUser((data as any)[val]);
+                        getUser((data as any)[val]["user_id"]);
                         setSearch("");
                         setShowSuggestions(false);
                       }}

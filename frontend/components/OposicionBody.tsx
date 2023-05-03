@@ -11,9 +11,51 @@ const OposicionBody = ({}: {}) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [currentUser, setCurrentUser] = useState();
   const [oposicion, setOposicion] = useState("");
+  const [tempUser, setTempUser] = useState({});
 
   const handleSubmit = () => {
-    setOposicion(oposicion);
+    // Update the opposition_rules field of the user
+    fetch(
+      `http://localhost:3001/api/v1/users/${(currentUser as any)["user_id"]}`,
+      {
+        method: "PATCH",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        // the api recieves the json object and a boolean value to know if the passed object is for a JSON value in sql
+        body: JSON.stringify({
+          oposition_rules: (tempUser as any)["oposition_rules"],
+        }),
+      }
+    )
+      .then((res) => {
+        if (res.status === 204) {
+          alert("Oposición registrada");
+        }
+      })
+      .catch((error) => {
+        alert("Error al registrar la oposición");
+      });
+
+    fetch("http://localhost:3001/api/v1/logs/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: (currentUser as any)["user_id"],
+        right_type: "O",
+        message: oposicion,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {})
+      .catch((error) => {
+        alert("Error al registrar la oposición");
+      });
+
+    setCurrentUser(undefined);
   };
 
   async function Load() {
@@ -109,141 +151,201 @@ const OposicionBody = ({}: {}) => {
           setIsHovered={setIsHovered}
           showSuggestions={showSuggestions}
           currentUser={currentUser}
+          tempUser={tempUser}
+          setTempUser={setTempUser}
         />
-
-        {/* Dropwon select */}
-        <div className="flex items-center gap-2 mt-6 ">
-          <div className="flex items-center gap-2">
-            <h1 className="font-bold text-gray-600">Tipo de datos:</h1>
-            <select
-              className={`bg-slate-200 form-select text-gray-500 block px-2 py-2 font-bold text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md`}
-              onChange={(e) => {
-                setTypeOfOpposition(e.target.value);
-              }}
-            >
-              <option value="Primarios">Primarios</option>
-              <option value="Secundarios">Secundarios</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Columns */}
-        <div className="flex w-full mt-6">
-          <div className="flex flex-col w-full pr-6">
-            {/* Map the object  */}
-            {typeOfOpposition === "Primarios"
-              ? Object.keys(primarios).map((key) => {
-                  return (
-                    <div
-                      className="flex justify-between font-bold pb-2 text-gray-600 "
-                      key={key}
-                    >
-                      <h1 className="text-black flex max-w-3xl">
-                        {(primariosTitles as any)[0][key]}
-                      </h1>
-                      <div className="flex items-center gap-2">
-                        <input
-                          checked={(primarios as any)[key] ? true : false}
-                          type="checkbox"
-                          className="form-checkbox h-6 w-6 rounded-full text-blue-600"
-                          onChange={() => {
-                            setPrimarios({
-                              ...primarios,
-                              [key]: true,
-                            });
-                          }}
-                        />
-                        <h1 className="font-normal">Show</h1>
-                        <input
-                          checked={(primarios as any)[key] ? false : true}
-                          type="checkbox"
-                          className="form-checkbox h-6 w-6 rounded-full text-blue-600 accent-red-500"
-                          onChange={() => {
-                            setPrimarios({
-                              ...primarios,
-                              [key]: false,
-                            });
-                          }}
-                        />
-                        <h1 className="font-normal">Hide</h1>
-                      </div>
-                    </div>
-                  );
-                })
-              : Object.keys(secundarios).map((key) => {
-                  return (
-                    <div
-                      className="flex justify-between font-bold pb-2 text-gray-600"
-                      key={key}
-                    >
-                      <h1 className=" flex max-w-3xl">
-                        {(secundariosTitles as any)[0][key]}
-                      </h1>
-                      <div className="flex items-center gap-2">
-                        <input
-                          checked={(secundarios as any)[key] ? true : false}
-                          type="checkbox"
-                          className="form-checkbox h-6 w-6 rounded-full text-blue-600"
-                          onChange={() => {
-                            setSecundarios({
-                              ...secundarios,
-                              [key]: true,
-                            });
-                          }}
-                        />
-                        <h1 className="font-normal">Show</h1>
-                        <input
-                          checked={(secundarios as any)[key] ? false : true}
-                          type="checkbox"
-                          className="form-checkbox h-6 w-6 rounded-full text-blue-600 accent-red-500"
-                          onChange={() => {
-                            setSecundarios({
-                              ...secundarios,
-                              [key]: false,
-                            });
-                          }}
-                        />
-                        <h1 className="font-normal">Hide</h1>
-                      </div>
-                    </div>
-                  );
-                })}
-          </div>
-          {/* Textarea */}
-        </div>
-
         {/* Divider */}
-        <div className="w-full border-b border-gray-300 mt-6"></div>
+        <div className="w-full border-b border-gray-300 mt-3"></div>
+        {currentUser !== undefined && currentUser["is_client"] == "1" ? (
+          <>
+            {/* Dropwon select */}
+            <div className="flex items-center gap-2 mt-6 ">
+              <div className="flex items-center gap-2">
+                <h1 className="font-bold text-gray-600">Tipo de datos:</h1>
+                <select
+                  className={`bg-slate-200 form-select text-gray-500 block px-2 py-2 font-bold text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md`}
+                  onChange={(e) => {
+                    setTypeOfOpposition(e.target.value);
+                  }}
+                >
+                  <option value="Primarios">Primarios</option>
+                  <option value="Secundarios">Secundarios</option>
+                </select>
+              </div>
+            </div>
 
-        <div>
-          <p className="text-gray-600 text-sm w-9/12 mt-6">
-            Por medio del presente y atendiendo a los derechos ARCO con los que
-            cuenta el usuario &quot;NombreUsuario&quot; está solicitando la
-            cancelación en el uso de su personal datos.
-          </p>
+            {/* Columns */}
 
-          <p className="text-gray-600 text-sm mt-2 font-bold">
-            Motivo por el que el usuario solicita la cancelación:
-          </p>
-        </div>
+            <div className="flex w-full mt-6">
+              <div className="flex flex-col w-full pr-6">
+                {/* Map the object  */}
+                {typeOfOpposition === "Primarios"
+                  ? Object.keys(primarios).map((key) => {
+                      // console.log(currentUser["oposition_rules"]);
+                      return (
+                        <div
+                          className="flex justify-between font-bold pb-2 text-gray-600 "
+                          key={key}
+                        >
+                          <h1 className=" flex max-w-3xl">
+                            {(primariosTitles as any)[0][key]}
+                          </h1>
+                          <div className="flex items-center gap-2">
+                            <input
+                              checked={
+                                (tempUser as any)["oposition_rules"][key]
+                                  ? true
+                                  : false
+                              }
+                              type="checkbox"
+                              className="form-checkbox h-6 w-6 rounded-full text-blue-600"
+                              onChange={() => {
+                                setTempUser({
+                                  ...tempUser,
+                                  ["oposition_rules"]: {
+                                    ...(tempUser as any)["oposition_rules"],
+                                    [key]: true,
+                                  },
+                                });
+                              }}
+                            />
+                            <h1 className="font-normal">Show</h1>
+                            <input
+                              checked={
+                                (tempUser as any)["oposition_rules"][key]
+                                  ? false
+                                  : true
+                              }
+                              type="checkbox"
+                              className="form-checkbox h-6 w-6 rounded-full text-blue-600 accent-red-500"
+                              onChange={() => {
+                                setTempUser({
+                                  ...tempUser,
+                                  ["oposition_rules"]: {
+                                    ...(tempUser as any)["oposition_rules"],
+                                    [key]: false,
+                                  },
+                                });
+                              }}
+                            />
+                            <h1 className="font-normal">Hide</h1>
+                          </div>
+                        </div>
+                      );
+                    })
+                  : // -----------------------------------------------
+                    Object.keys(secundarios).map((key) => {
+                      return (
+                        <div
+                          className="flex justify-between font-bold pb-2 text-gray-600"
+                          key={key}
+                        >
+                          <h1 className=" flex max-w-3xl">
+                            {(secundariosTitles as any)[0][key]}
+                          </h1>
+                          <div className="flex items-center gap-2">
+                            <input
+                              checked={
+                                (tempUser as any)["oposition_rules"][key]
+                                  ? true
+                                  : false
+                              }
+                              type="checkbox"
+                              className="form-checkbox h-6 w-6 rounded-full text-blue-600"
+                              onChange={() => {
+                                setTempUser({
+                                  ...tempUser,
+                                  ["oposition_rules"]: {
+                                    ...(tempUser as any)["oposition_rules"],
+                                    [key]: true,
+                                  },
+                                });
+                              }}
+                            />
+                            <h1 className="font-normal">Show</h1>
+                            <input
+                              checked={
+                                (tempUser as any)["oposition_rules"][key]
+                                  ? false
+                                  : true
+                              }
+                              type="checkbox"
+                              className="form-checkbox h-6 w-6 rounded-full text-blue-600 accent-red-500"
+                              onChange={() => {
+                                setTempUser({
+                                  ...tempUser,
+                                  ["oposition_rules"]: {
+                                    ...(tempUser as any)["oposition_rules"],
+                                    [key]: false,
+                                  },
+                                });
+                              }}
+                            />
+                            <h1 className="font-normal">Hide</h1>
+                          </div>
+                        </div>
+                      );
+                    })}
+              </div>
+              {/* Textarea */}
+            </div>
 
-        <div className="w-full flex flex-col pt-4 ml-2 mb-6">
-          <textarea
-            className="w-[97%] h-48 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-gray-100 resize-none"
-            placeholder="Escribe aquí..."
-            value={oposicion}
-            onChange={(e) => {
-              setOposicion(e.target.value);
-            }}
-          ></textarea>
+            {/* Divider */}
+            <div className="w-full border-b border-gray-300 mt-3"></div>
 
-          <button
-            className="w-1/4 bg-blue-600 text-white font-bold py-2 px-4 rounded-md mt-4"
-            onClick={() => handleSubmit()}
-          >
-            Enviar
-          </button>
-        </div>
+            <>
+              <div>
+                <p className="text-gray-600 text-sm w-9/12 mt-6">
+                  Por medio del presente y atendiendo a los derechos ARCO con
+                  los que cuenta el usuario &quot;NombreUsuario&quot; está
+                  solicitando la cancelación en el uso de su personal datos.
+                </p>
+
+                <p className="text-gray-600 text-sm mt-2 font-bold">
+                  Motivo por el que el usuario solicita la cancelación:
+                </p>
+              </div>
+
+              <div className="w-full flex flex-col pt-4 ml-2 mb-6">
+                <textarea
+                  className="w-[97%] h-48 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent bg-gray-100 resize-none"
+                  placeholder="Escribe aquí..."
+                  value={oposicion}
+                  onChange={(e) => {
+                    setOposicion(e.target.value);
+                  }}
+                ></textarea>
+
+                <button
+                  className="w-1/4 bg-blue-600 text-white font-bold py-2 px-4 rounded-md mt-4"
+                  onClick={() => {
+                    if (oposicion !== "" || oposicion.length > 0) {
+                      handleSubmit();
+                    } else {
+                      alert("No se puede enviar una oposición vacía.");
+                    }
+                  }}
+                >
+                  Enviar
+                </button>
+              </div>
+            </>
+          </>
+        ) : currentUser !== undefined && currentUser["is_client"] == "0" ? (
+          <>
+            <div className="flex justify-center items-center animate-appearShort">
+              <h1 className="font-bold text-lg pb-2 text-red-600 mt-20">
+                El usuario seleccionado no es un cliente
+              </h1>
+            </div>
+          </>
+        ) : (
+          <div className="flex justify-center items-center animate-appearShort">
+            <h1 className="font-bold text-xl pb-2 text-gray-600 mt-20">
+              Seleccione un usuario para poder realizar la oposición.
+            </h1>
+          </div>
+        )}
       </div>
     </>
   );

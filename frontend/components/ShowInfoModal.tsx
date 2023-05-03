@@ -79,6 +79,21 @@ const ShowInfoModal = ({
       .catch((err) => console.log(err));
     // Update user in state
     setEdit(false);
+    fetch("http://localhost:3001/api/v1/logs/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: user.user_id,
+        right_type: "R",
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {})
+      .catch((error) => {
+        alert("Error al registrar la oposición");
+      });
   };
 
   return (

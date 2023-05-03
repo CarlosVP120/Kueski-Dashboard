@@ -28,6 +28,12 @@ const RightSide = ({
     }
   }, [update]);
 
+  useEffect(() => {
+    if (option === "Dashboard") {
+      (async () => await Load())();
+    }
+  }, [option]);
+
   async function Load() {
     // const res = await fetch("https://kueski-users-db.onrender.com/getUsers", {
     const res = await fetch("http://localhost:3001/api/v1/users", {

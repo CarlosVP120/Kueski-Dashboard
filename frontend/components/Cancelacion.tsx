@@ -39,14 +39,10 @@ const Cancelacion = () => {
     })
     .join(" ");
 
-  const handleSubmit = () => {
-    setCancelacion(cancelacion);
-  };
-
   return (
     <>
       <div className="w-full flex animate-appear flex-col h-full">
-        <OposicionTopBar name={name!} />
+        <OposicionTopBar name={name!} cancelacion={true} />
         <CancelacionBody />
       </div>
     </>

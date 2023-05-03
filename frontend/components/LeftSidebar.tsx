@@ -4,8 +4,10 @@ import { useRouter } from "next/router";
 
 const LeftSidebar = ({
   setOption,
+  option,
 }: {
   setOption: (option: string) => void;
+  option: string;
 }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const router = useRouter();
@@ -26,19 +28,25 @@ const LeftSidebar = ({
       <div className="w-full pl-6 pb-4 h-full flex flex-col justify-between animate-appear">
         <div>
           <h1
-            className="text-white text-2xl font-bold mt-4 cursor-pointer hover:text-gray-400 transition duration-300 ease-in-out"
+            className={`${
+              option == "Dashboard" ? "text-blue-400" : "text-white"
+            } text-2xl font-bold mt-4 cursor-pointer hover:text-gray-400 transition duration-300 ease-in-out`}
             onClick={() => setOption("Dashboard")}
           >
             Dashboard
           </h1>
           <h1
-            className="text-white text-2xl font-bold mt-4 cursor-pointer hover:text-gray-400 transition duration-300 ease-in-out"
+            className={`${
+              option == "Cancelación" ? "text-blue-400" : "text-white"
+            } text-2xl font-bold mt-4 cursor-pointer hover:text-gray-400 transition duration-300 ease-in-out`}
             onClick={() => setOption("Cancelación")}
           >
             Cancelación
           </h1>
           <h1
-            className="text-white text-2xl font-bold mt-4 cursor-pointer hover:text-gray-400 transition duration-300 ease-in-out"
+            className={`${
+              option == "Oposición" ? "text-blue-400" : "text-white"
+            } text-2xl font-bold mt-4 cursor-pointer hover:text-gray-400 transition duration-300 ease-in-out`}
             onClick={() => setOption("Oposición")}
           >
             Oposición
@@ -46,7 +54,9 @@ const LeftSidebar = ({
         </div>
         <div className="">
           <h1
-            className="text-white text-2xl font-bold mt-4 cursor-pointer hover:text-blue-400 transition duration-300 ease-in-out"
+            className={`${
+              option == "Historial" ? "text-blue-400" : "text-white"
+            } text-2xl font-bold mt-4 cursor-pointer hover:text-blue-400 transition duration-300 ease-in-out`}
             onClick={() => setOption("Historial")}
           >
             Historial

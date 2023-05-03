@@ -29,7 +29,7 @@ const Dashboard = () => {
       </Head>
       {auth.currentUser !== null ? (
         <div className="flex h-screen w-full animate-appear bg-black">
-          <LeftSidebar setOption={setOption} />
+          <LeftSidebar setOption={setOption} option={option} />
           <RightSide option={option} setOption={setOption} />
         </div>
       ) : (
