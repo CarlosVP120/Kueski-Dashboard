@@ -14,7 +14,7 @@ const DashboardComponent = ({ data }: { data: any }) => {
 
   return (
     <div className="w-full flex animate-appear flex-col h-full">
-      <TopBar name={name!} />
+      <TopBar name={name!} cancelacion={false} />
       <OposicionBody />
     </div>
   );
