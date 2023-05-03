@@ -47,7 +47,7 @@ const getOneUser = (userId) => {
         let sqlQuery = "CALL getUserInfo(?);";
         db.executeQuery(sqlQuery, userId, (error, row) => {
             if (error) reject({ status: 500, message: error });
-            if (row.length == 0) reject({ status: 404, message: "Cartoon Not Found"});
+            if (row[0].lenght == 0) reject({ status: 404, message: "Cartoon Not Found"});
             resolve(row[0]);
         });
     });
@@ -71,29 +71,39 @@ const createNewUser = (newUser) => {
     });
 };
 
-const updateOneUser = (userId, columns, values) => {
+const updateOneUser = (userId, changedColumns, values) => {
     return new Promise(async (resolve, reject) => {
         const tables = await getTables();
         let sqlQuery =
             "UPDATE users INNER JOIN addresses USING(user_id)\
-        INNER JOIN identifications USING(user_id) SET ";
-        let updatedTables = new Set();
+            INNER JOIN identifications USING(user_id) SET ";
         sqlQuery += columns;
+        let updatedTables = new Set();
         for (const table of tables) {
-            const isInTheTable = table["columns"].some((column) => {
-                return columns.includes(column);
+            const isModified = table["columns"].some((column) => {
+                return changedColumns.includes(column);
             });
-            if (isInTheTable) {
-                updatedTables.add(table["name"]);
-            }
+            if (isModified) updatedTables.add(table["name"]);
         }
-        //console.log(updatedTables);
         for (const table of updatedTables) {
             sqlQuery += `${table}.updated_at = now(), `;
         }
         sqlQuery = sqlQuery.slice(0, -2);
         sqlQuery += " WHERE user_id = ?;";
         values.push(userId);
+        db.executeQuery(sqlQuery, values, (error, result) => {
+            if (error) reject({ status: 500, message: error });
+            if (!result["affectedRows"]) reject({ status: 404, message: "User Not Found"});
+            resolve();
+        });
+    });
+};
+
+const updateOpositionRules = (values) => {
+    return new Promise((resolve, reject) => {
+        let sqlQuery = 
+            "UPDATE users SET oposition_rules = ?, updated_at = now()\
+            WHERE user_id = ?;";
         db.executeQuery(sqlQuery, values, (error, result) => {
             if (error) reject({ status: 500, message: error });
             if (!result["affectedRows"]) reject({ status: 404, message: "User Not Found"});
@@ -119,5 +129,6 @@ module.exports = {
     getOneUser,
     createNewUser,
     updateOneUser,
-    deleteOneUser
+    updateOpositionRules,
+    deleteOneUser,
 };

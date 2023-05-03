@@ -16,6 +16,8 @@ router.post("/", userController.createNewUser);
 
 router.patch("/:userId", userController.updateOneUser);
 
+router.put("/:userId/oposition", userController.updateOpositionRules);
+
 router.delete("/:userId", userController.deleteOneUser);
 
 module.exports = router;

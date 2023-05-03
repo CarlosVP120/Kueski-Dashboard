@@ -45,6 +45,16 @@ const updateOneUser = async (userId, changes) => {
     }
 };
 
+const updateOpositionRules = async (userId, changes) => {
+    try {
+        changes = JSON.stringify(changes);
+        const values = [changes, userId];
+        await User.updateOpositionRules(values);
+    } catch (error) {
+        throw error;
+    }
+};
+
 const deleteOneUser = async (userId) => {
     try {
         const wasDeleted = await User.deleteOneUser(userId);
@@ -59,5 +69,6 @@ module.exports = {
     getOneUser,
     createNewUser,
     updateOneUser,
+    updateOpositionRules,
     deleteOneUser,
 };

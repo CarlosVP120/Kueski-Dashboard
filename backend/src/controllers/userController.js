@@ -41,7 +41,21 @@ const updateOneUser = async (req, res) => {
         params: { userId }
     } = req;
     try {
-        const code = await userService.updateOneUser(userId, body);
+        await userService.updateOneUser(userId, body);
+        res.sendStatus(204);
+    } catch (error) {
+        res.status(error?.status || 500)
+            .send({ status: "FAILED", data: { error: error?.messsage || error } });
+    }
+};
+
+const updateOpositionRules = async (req, res) => {
+    const {
+        body,
+        params: { userId }
+    } = req;
+    try {
+        await userService.updateOpositionRules(userId, body);
         res.sendStatus(204);
     } catch (error) {
         res.status(error?.status || 500)
@@ -66,6 +80,7 @@ module.exports = {
     getOneUser,
     createNewUser,
     updateOneUser,
+    updateOpositionRules,
     deleteOneUser,
 };
 
