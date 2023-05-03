@@ -12,6 +12,10 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.get("/", (req, res) => {
+  res.send("Hey this is my API running 🥳");
+});
+
 app.use("/api/v1/users", v1UserRouter);
 app.use("/api/v1/logs", v1LogRouter);
 

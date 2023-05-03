@@ -48,14 +48,19 @@ const DashboardTable = ({
         },
       }
     );
-    const result = await res.json();
-    setLogs(result);
-    logs.map((log) => {
-      if (log.right_type == "C") {
-        setCancelaciones(cancelaciones + 1);
-      } else if (log.right_type == "O") {
-        setOposiciones(oposiciones + 1);
-      }
+    const result = await res.json().then((result) => {
+      let canc = 0;
+      let opos = 0;
+      setLogs(result);
+      result.forEach((log: any) => {
+        if (log["right_type"] === "C") {
+          canc++;
+        } else if (log["right_type"] === "O") {
+          opos++;
+        }
+      });
+      setCancelaciones(canc);
+      setOposiciones(opos);
     });
   }
   return (
