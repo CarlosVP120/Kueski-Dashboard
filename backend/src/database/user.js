@@ -34,7 +34,7 @@ const getTables = async () => {
 const getAllUsers = () => {
   return new Promise((resolve, reject) => {
     let sqlQuery =
-      "SELECT user_id, user_name, first_last_name, second_last_name, email, rfc, curp\
+      "SELECT user_id, user_name, first_last_name, second_last_name, email, rfc, curp, is_client\
             FROM users;";
     db.executeQuery(sqlQuery, (error, rows) => {
       if (error) reject({ status: 500, message: error });
