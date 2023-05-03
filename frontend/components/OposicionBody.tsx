@@ -17,7 +17,7 @@ const OposicionBody = ({}: {}) => {
   const handleSubmit = () => {
     // Update the opposition_rules field of the user
     fetch(
-      `http://localhost:3001/api/v1/users/${
+      `https://kueski-users-db.onrender.com/api/v1/users/${
         (currentUser as any)["user_id"]
       }/oposition`,
       {
