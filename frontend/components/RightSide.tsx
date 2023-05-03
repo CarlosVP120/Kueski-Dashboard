@@ -36,6 +36,7 @@ const RightSide = ({
 
   async function Load() {
     // const res = await fetch("https://kueski-users-db.onrender.com/getUsers", {
+    console.log("fetching data");
     const res = await fetch(
       "https://kueski-users-db.onrender.com/api/v1/users",
       {
@@ -47,7 +48,7 @@ const RightSide = ({
       }
     );
     const result = await res.json();
-    // console.log("loaded data", result);
+    console.log("loaded data", result);
     setData(result);
   }
 

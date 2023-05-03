@@ -22,16 +22,42 @@ const DashboardTable = ({
   const [cancelaciones, setCancelaciones] = useState(0);
   const [clientes, setClientes] = useState(0);
   const [oposiciones, setOposiciones] = useState(0);
+  const [logs, setLogs] = useState<any[]>([]);
 
   useEffect(() => {
     // Get the total of cancelations
     const clientes_total = data?.filter((user: any) => {
       return user["is_client"] == 1;
     });
-
-    setClientes(clientes_total.length);
+    setClientes(clientes_total?.length);
   });
 
+  useEffect(() => {
+    (async () => await Load())();
+  }, []);
+
+  // /api/v1/logs/getAllLogs
+  async function Load() {
+    const res = await fetch(
+      "https://kueski-users-db.onrender.com/api/v1/logs/",
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const result = await res.json();
+    setLogs(result);
+    logs.map((log) => {
+      if (log.right_type == "C") {
+        setCancelaciones(cancelaciones + 1);
+      } else if (log.right_type == "O") {
+        setOposiciones(oposiciones + 1);
+      }
+    });
+  }
   return (
     <>
       {data ? (
@@ -45,9 +71,13 @@ const DashboardTable = ({
               </h1>
               <PieChart
                 data={[
-                  // Blue colors
+                  // Dark Blue colors
                   { title: "Clientes", value: clientes, color: "#2B6CB0" },
-                  { title: "", value: 15, color: "#A0AEC0" },
+                  {
+                    title: "",
+                    value: data?.length - clientes,
+                    color: "#68A9E9",
+                  },
                 ]}
                 label={({ dataEntry }) =>
                   Math.round(dataEntry.percentage) + "%" + " " + dataEntry.title
@@ -62,14 +92,18 @@ const DashboardTable = ({
               <h1 className="text-lg font-bold text-gray-700">
                 Cancelaciones realizadas
               </h1>
-              <h1 className="text-6xl font-bold text-gray-700">10</h1>
+              <h1 className="text-6xl font-bold text-gray-700">
+                {cancelaciones}
+              </h1>
             </div>
             {/* Column 3 */}
             <div className="flex flex-col justify-center items-center py-4 w-full">
               <h1 className="text-lg font-bold text-gray-700">
                 Oposiciones realizadas
               </h1>
-              <h1 className="text-6xl font-bold text-gray-700">10</h1>
+              <h1 className="text-6xl font-bold text-gray-700">
+                {oposiciones}
+              </h1>
             </div>
           </div>
 
