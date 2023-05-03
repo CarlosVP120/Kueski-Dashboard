@@ -140,6 +140,10 @@ const OposicionBody = ({}: {}) => {
     encuestas: "Mejoras en el servicio de atención y trato con el cliente.",
   });
 
+  if (currentUser !== null && currentUser !== undefined) {
+    console.log(Object.keys(currentUser as any).length);
+  }
+
   return (
     <>
       <div className="relative overflow-x-auto sm:rounded-lg mt-6 ml-6">
@@ -160,7 +164,9 @@ const OposicionBody = ({}: {}) => {
         />
         {/* Divider */}
         <div className="w-full border-b border-gray-300 mt-3"></div>
-        {currentUser !== undefined && currentUser["is_client"] == "1" ? (
+        {currentUser !== undefined &&
+        currentUser["is_client"] == "1" &&
+        Object.keys(currentUser as any).length > 15 ? (
           <>
             {/* Dropwon select */}
             <div className="flex items-center gap-2 mt-6 ">
