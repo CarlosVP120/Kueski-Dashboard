@@ -47,13 +47,12 @@ const Row = ({
       .catch((error) => {
         alert("Error al registrar la oposición");
       });
-    console.log(result);
   };
 
   return (
     <>
       <tr
-        className="bg-white border-b hover:bg-gray-50"
+        className="bg-white border-b hover:bg-gray-50 select-none"
         onDoubleClick={() => {
           query_user_data(user["user_id"]).then(() => {
             setShowInfo(true);
