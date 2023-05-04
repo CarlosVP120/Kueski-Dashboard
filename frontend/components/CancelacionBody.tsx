@@ -12,14 +12,17 @@ const OposicionBody = ({}: {}) => {
   const [tempUser, setTempUser] = useState();
 
   async function Load() {
-    // const res = await fetch("http://localhost:3001/getUsers", {
-    const res = await fetch("http://localhost:3001/api/v1/users", {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
+    // const res = await fetch("https://kueski-users-db.onrender.com/getUsers", {
+    const res = await fetch(
+      "https://kueski-users-db.onrender.com/api/v1/users",
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const result = await res.json();
     // console.log("loaded data", result);
     setData(result);
@@ -31,7 +34,8 @@ const OposicionBody = ({}: {}) => {
 
   const handleSubmit = () => {
     fetch(
-      "http://localhost:3001/api/v1/users/" + (currentUser as any)["user_id"],
+      "https://kueski-users-db.onrender.com/api/v1/users/" +
+        (currentUser as any)["user_id"],
       {
         method: "DELETE",
         headers: {
@@ -47,7 +51,7 @@ const OposicionBody = ({}: {}) => {
         alert("Error al registrar la oposición");
       });
 
-    fetch("http://localhost:3001/api/v1/logs/", {
+    fetch("https://kueski-users-db.onrender.com/api/v1/logs/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -3,7 +3,7 @@ const db = require("./database");
 const getColumnNames = (table) => {
   return new Promise((resolve, reject) => {
     let sqlQuery = `SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '${table}';`;
-    db.executeQuery(sqlQuery, (error, rows) => {
+    db.query(sqlQuery, (error, rows) => {
       if (error) reject({ status: 500, message: error });
       const columns = rows.map((row) => row.COLUMN_NAME);
       resolve(columns);
@@ -32,13 +32,14 @@ const getTables = async () => {
 };
 
 const getAllUsers = () => {
-  console.log("getAllUsers");
   return new Promise((resolve, reject) => {
     let sqlQuery =
       "SELECT user_id, user_name, first_last_name, second_last_name, email, rfc, curp, is_client\
             FROM users;";
-    db.executeQuery(sqlQuery, (error, rows) => {
-      if (error) reject({ status: 500, message: error });
+    db.query(sqlQuery, (error, rows) => {
+      if (error) {
+        reject({ status: 500, message: error });
+      }
       resolve(rows);
     });
   });
@@ -47,7 +48,7 @@ const getAllUsers = () => {
 const getOneUser = (userId) => {
   return new Promise((resolve, reject) => {
     let sqlQuery = "CALL getUserInfo(?);";
-    db.executeQuery(sqlQuery, userId, (error, row) => {
+    db.query(sqlQuery, userId, (error, row) => {
       if (error) reject({ status: 500, message: error });
       if (row[0].lenght == 0)
         reject({ status: 404, message: "Cartoon Not Found" });
@@ -67,7 +68,7 @@ const createNewUser = (newUser) => {
     }
     sqlQuery = sqlQuery.slice(0, -2);
     sqlQuery += "); SELECT * FROM users WHEN user_id = LAST_INSERT_ID();";
-    db.executeQuery(sqlQuery, newUser, (error, result) => {
+    db.query(sqlQuery, newUser, (error, result) => {
       if (error) reject({ status: 500, message: error });
       resolve(result);
     });
@@ -94,7 +95,7 @@ const updateOneUser = (userId, changedColumns, values) => {
     sqlQuery = sqlQuery.slice(0, -2);
     sqlQuery += " WHERE user_id = ?;";
     values.push(userId);
-    db.executeQuery(sqlQuery, values, (error, result) => {
+    db.query(sqlQuery, values, (error, result) => {
       if (error) reject({ status: 500, message: error });
       if (!result["affectedRows"])
         reject({ status: 404, message: "User Not Found" });
@@ -108,7 +109,7 @@ const updateOpositionRules = (values) => {
     let sqlQuery =
       "UPDATE users SET oposition_rules = ?, updated_at = now()\
             WHERE user_id = ?;";
-    db.executeQuery(sqlQuery, values, (error, result) => {
+    db.query(sqlQuery, values, (error, result) => {
       if (error) reject({ status: 500, message: error });
       if (!result["affectedRows"])
         reject({ status: 404, message: "User Not Found" });
@@ -120,7 +121,7 @@ const updateOpositionRules = (values) => {
 const deleteOneUser = (userId) => {
   return new Promise((resolve, reject) => {
     let sqlQuery = "CALL deleteUser(?, @wasDeleted); SELECT @wasDeleted;";
-    db.executeQuery(sqlQuery, userId, (error, result) => {
+    db.query(sqlQuery, userId, (error, result) => {
       if (error) reject({ status: 500, message: error });
       if (!result["affectedRows"])
         reject({ status: 404, message: "User Not Found" });

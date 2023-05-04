@@ -4,9 +4,9 @@ const userController = require("../../controllers/userController");
 const apicache = require("apicache");
 const router = express.Router();
 
-const cache = apicache.middleware;
+//const cache = apicache.middleware;
 
-router.get("/", cache("1 minute"), userController.getAllUsers);
+//router.get("/", cache("1 minute"), userController.getAllUsers);
 
 router.get("/", userController.getAllUsers);
 
