@@ -17,7 +17,7 @@ const OposicionBody = ({}: {}) => {
   const handleSubmit = () => {
     // Update the opposition_rules field of the user
     fetch(
-      `https://kueski-users-db.onrender.com/api/v1/users/${
+      `http://localhost:3001/api/v1/users/${
         (currentUser as any)["user_id"]
       }/oposition`,
       {
@@ -39,7 +39,7 @@ const OposicionBody = ({}: {}) => {
         alert("Error al registrar la oposición");
       });
 
-    fetch("https://kueski-users-db.onrender.com/api/v1/logs/", {
+    fetch("http://localhost:3001/api/v1/logs/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -60,17 +60,14 @@ const OposicionBody = ({}: {}) => {
   };
 
   async function Load() {
-    // const res = await fetch("https://kueski-users-db.onrender.com/getUsers", {
-    const res = await fetch(
-      "https://kueski-users-db.onrender.com/api/v1/users",
-      {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    // const res = await fetch("http://localhost:3001/getUsers", {
+    const res = await fetch("http://localhost:3001/api/v1/users", {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
     const result = await res.json();
     // console.log("loaded data", result);
     setData(result);

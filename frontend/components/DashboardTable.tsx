@@ -38,16 +38,13 @@ const DashboardTable = ({
 
   // /api/v1/logs/getAllLogs
   async function Load() {
-    const res = await fetch(
-      "https://kueski-users-db.onrender.com/api/v1/logs/",
-      {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const res = await fetch("http://localhost:3001/api/v1/logs/", {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
     const result = await res.json().then((result) => {
       let canc = 0;
       let opos = 0;
