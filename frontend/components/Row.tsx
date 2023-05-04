@@ -47,6 +47,7 @@ const Row = ({
       .catch((error) => {
         alert("Error al registrar la oposición");
       });
+    console.log(result);
   };
 
   return (
