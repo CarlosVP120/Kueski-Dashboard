@@ -81,7 +81,7 @@ const updateOneUser = (userId, changedColumns, values) => {
     let sqlQuery =
       "UPDATE users INNER JOIN addresses USING(user_id)\
             INNER JOIN identifications USING(user_id) SET ";
-    sqlQuery += columns;
+    sqlQuery += changedColumns;
     let updatedTables = new Set();
     for (const table of tables) {
       const isModified = table["columns"].some((column) => {
