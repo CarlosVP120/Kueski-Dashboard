@@ -6,10 +6,12 @@ const Row = ({
   user,
   setOption,
   setUpdate,
+  setLoadedUserForRight,
 }: {
   user: any;
   setOption: (option: string) => void;
   setUpdate: (update: boolean) => void;
+  setLoadedUserForRight: (loadedUserForRight: any) => void;
 }) => {
   const [open, setOpen] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
@@ -68,8 +70,9 @@ const Row = ({
         <td className="px-4 py-4">{user["user_name"]}</td>
         <td className="px-4 py-4">{user["first_last_name"]}</td>
         <td className="px-4 py-4">{user["second_last_name"]}</td>
-        <td className="px-4 py-4">{user["curp"]}</td>
-        <td className="px-4 py-4">{user["rfc"]}</td>
+        {/* Cut the curp so that is is max 13 letters length */}
+        <td className="px-4 py-4">{user["curp"].substring(0, 10)}</td>
+        <td className="px-4 py-4">{user["rfc"].substring(0, 10)}</td>
         <td
           className="px-4 py-4 text-center flex flex-col justify-center items-center"
           onClick={() => setOpen(!open)}
@@ -146,13 +149,19 @@ const Row = ({
             </h1>
             <h1
               className="font-bold cursor-pointer py-0.5"
-              onClick={() => setOption("Oposición")}
+              onClick={() => {
+                setLoadedUserForRight(user["user_id"]);
+                setOption("Oposición");
+              }}
             >
               Oposición
             </h1>
             <h1
               className="font-bold cursor-pointer py-0.5 text-red-500"
-              onClick={() => setOption("Cancelación")}
+              onClick={() => {
+                setLoadedUserForRight(user["user_id"]);
+                setOption("Cancelación");
+              }}
             >
               Cancelar
             </h1>

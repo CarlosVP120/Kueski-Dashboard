@@ -13,6 +13,7 @@ const RightSide = ({
 }) => {
   const [data, setData] = useState();
   const [update, setUpdate] = useState(false);
+  const [loadedUserForRight, setLoadedUserForRight] = useState({});
 
   useEffect(() => {
     (async () => await Load())();
@@ -48,18 +49,22 @@ const RightSide = ({
       }
     );
     const result = await res.json();
-    console.log("loaded data", result);
     setData(result);
   }
 
   return (
     <div className="w-4/5 bg-white rounded-l-3xl p-3">
       {option === "Dashboard" ? (
-        <Dashboard data={data} setOption={setOption} setUpdate={setUpdate} />
+        <Dashboard
+          data={data}
+          setOption={setOption}
+          setUpdate={setUpdate}
+          setLoadedUserForRight={setLoadedUserForRight}
+        />
       ) : option === "Cancelación" ? (
-        <Cancelacion />
+        <Cancelacion loadedUserForRight={loadedUserForRight} />
       ) : option === "Oposición" ? (
-        <Oposicion data={data} />
+        <Oposicion loadedUserForRight={loadedUserForRight} />
       ) : option === "Historial" ? (
         <Historial />
       ) : null}

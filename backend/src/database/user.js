@@ -50,7 +50,7 @@ const getOneUser = (userId) => {
     let sqlQuery = "CALL getUserInfo(?);";
     db.query(sqlQuery, userId, (error, row) => {
       if (error) reject({ status: 500, message: error });
-      if (row[0].lenght == 0)
+      if (row[0].length == 0)
         reject({ status: 404, message: "Cartoon Not Found" });
       resolve(row[0]);
     });

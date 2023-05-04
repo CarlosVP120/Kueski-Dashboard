@@ -7,10 +7,12 @@ const DashboardComponent = ({
   data,
   setOption,
   setUpdate,
+  setLoadedUserForRight,
 }: {
   data: any;
   setOption: (option: string) => void;
   setUpdate: (update: boolean) => void;
+  setLoadedUserForRight: (loadedUserForRight: any) => void;
 }) => {
   const [search, setSearch] = useState("");
 
@@ -31,10 +33,19 @@ const DashboardComponent = ({
     })
     .join(" ");
 
+  useEffect(() => {
+    setLoadedUserForRight(null);
+  }, []);
+
   return (
     <div className="w-full flex animate-appear flex-col h-full">
       <DashboardTopBar search={search} setSearch={setSearch} name={name!} />
-      <DashboardTable data={data} setOption={setOption} setUpdate={setUpdate} />
+      <DashboardTable
+        data={data}
+        setOption={setOption}
+        setUpdate={setUpdate}
+        setLoadedUserForRight={setLoadedUserForRight}
+      />
     </div>
   );
 };

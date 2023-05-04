@@ -6,10 +6,12 @@ const DashboardTable = ({
   data,
   setOption,
   setUpdate,
+  setLoadedUserForRight,
 }: {
   data: Array<any>;
   setOption: (option: string) => void;
   setUpdate: (update: boolean) => void;
+  setLoadedUserForRight: (loadedUserForRight: any) => void;
 }) => {
   const defaultLabelStyle = {
     fontSize: "8px",
@@ -147,6 +149,7 @@ const DashboardTable = ({
                     user={user}
                     setOption={setOption}
                     setUpdate={setUpdate}
+                    setLoadedUserForRight={setLoadedUserForRight}
                   />
                 );
               })}

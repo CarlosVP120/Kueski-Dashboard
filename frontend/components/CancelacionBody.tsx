@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Searchbar from "./Searchbar";
 import Swal from "sweetalert2";
 
-const OposicionBody = ({}: {}) => {
+const OposicionBody = ({ loadedUserForRight }: { loadedUserForRight: any }) => {
   const [isHovered, setIsHovered] = useState(true);
   const [search, setSearch] = useState("");
   const [data, setData] = useState({});
@@ -30,7 +30,38 @@ const OposicionBody = ({}: {}) => {
 
   useEffect(() => {
     (async () => await Load())();
+    if (loadedUserForRight) {
+      getUser(loadedUserForRight);
+    }
   }, []);
+
+  async function getUser(id: any) {
+    // const res = await fetch("https://kueski-users-db.onrender.com/getUser", {
+    const res = await fetch(
+      "https://kueski-users-db.onrender.com/api/v1/users/" + id,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const result = await res.json();
+
+    if (
+      typeof result[0]["oposition_rules"] !== "object" &&
+      result[0]["oposition_rules"] !== null
+    ) {
+      const userData = JSON.parse(result[0]["oposition_rules"]);
+      result[0]["oposition_rules"] = userData;
+    } else if (result[0]["oposition_rules"] === null) {
+      result[0]["oposition_rules"] = {};
+    }
+
+    setCurrentUser(result[0]);
+    setTempUser(result[0]);
+  }
 
   const handleSubmit = () => {
     fetch(

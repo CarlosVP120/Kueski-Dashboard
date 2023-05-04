@@ -110,7 +110,7 @@ const Searchbar = ({
           </h1>
         </div>
       </div>
-      <div className="flex flex-col max-h-96 mt-1 fixed bg-slate-100 rounded-md w-1/4 overflow-y-auto">
+      <div className="flex flex-col max-h-96 mt-1 fixed bg-slate-100 rounded-md w-1/3 overflow-y-auto">
         {showSuggestions &&
           Object.keys(data)
             .filter((key) => {
@@ -144,7 +144,8 @@ const Searchbar = ({
             .map((val, key) => {
               return (
                 <>
-                  {search.length > 0 && (
+                  {search.length > 0 &&
+                  (data as any)[val]["user_name"]?.length > 2 ? (
                     <button
                       className="flex items-center justify-between rounded-xl px-4 py-2 mx-2 mt-2 cursor-pointer hover:bg-slate-200"
                       key={key}
@@ -161,7 +162,7 @@ const Searchbar = ({
                         {(data as any)[val]["second_last_name"]}{" "}
                       </h1>
                     </button>
-                  )}
+                  ) : null}
                 </>
               );
             })}
