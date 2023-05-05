@@ -5,7 +5,7 @@ const getAllLogs = () => {
     let sqlQuery =
       "SELECT register_id, user_id, right_type, register_date, message\
             FROM registers r\
-            INNER JOIN messages m\
+            LEFT JOIN messages m\
             USING(register_id);";
     db.query(sqlQuery, (error, rows) => {
       if (error) reject({ status: 500, message: error });
