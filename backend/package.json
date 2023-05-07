@@ -4,7 +4,9 @@
   "description": "",
   "type": "commonjs",
   "scripts": {
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "test": "mocha ./src/tests/*.spec.js",
+    "test:watch": "mocha --watch ./src/tests/*.spec.js"
   },
   "keywords": [],
   "author": "",
@@ -18,9 +20,15 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "mysql": "^2.18.1",
+    "mysql2": "^3.3.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "nodemon": "^2.0.22",
+    "rewire": "^6.0.0",
+    "sinon": "^15.0.4",
+    "sinon-chai": "^3.7.0"
   }
 }
